@@ -1,0 +1,92 @@
+﻿<Window x:Class="TaskReports.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskReports"
+        mc:Ignorable="d"
+        Title="Task Reports" Height="450" Width="600" MinHeight="300" MinWidth="400">
+    <Grid>
+        <TabControl Margin="0,0,0,30" MinHeight="100" MinWidth="200">
+            <TabItem Header="Главная">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+
+
+                    <StackPanel Grid.Row="0" Grid.Column="0" MinHeight="30" Orientation="Horizontal">
+                        <Label Content="Проект" MinWidth="50" VerticalAlignment="Center"/>
+                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch">
+                            <ComboBoxItem Content="Project 1"/>
+                            <ComboBoxItem Content="Project 2"/>
+                            <ComboBoxItem Content="Project 3"/>
+                        </ComboBox>
+                    </StackPanel>
+                    
+                    <!--
+                    <GroupBox Header="Задания">
+                        <ListBox>
+                            <ListBoxItem HorizontalContentAlignment="Stretch">
+                                <GroupBox Header="Задание 1">
+                                    <StackPanel>
+                                        <TextBlock Text="Время"/>
+                                        <TextBlock Text="Сервер"/>
+                                        <TextBlock Text="Отправитель"/>
+                                        <TextBlock Text="Получатели"/>
+                                    </StackPanel>
+                                </GroupBox>
+                            </ListBoxItem>
+                            <ListBoxItem HorizontalContentAlignment="Stretch">
+                                <GroupBox Header="Задание 1">
+                                    <StackPanel>
+                                        <TextBlock Text="Время"/>
+                                        <TextBlock Text="Сервер"/>
+                                        <TextBlock Text="Отправитель"/>
+                                        <TextBlock Text="Получатели"/>
+                                    </StackPanel>
+                                </GroupBox>
+                            </ListBoxItem>
+                            <ListBoxItem HorizontalContentAlignment="Stretch">
+                                <GroupBox Header="Задание 1">
+                                    <StackPanel>
+                                        <TextBlock Text="Время"/>
+                                        <TextBlock Text="Сервер"/>
+                                        <TextBlock Text="Отправитель"/>
+                                        <TextBlock Text="Получатели"/>
+                                    </StackPanel>
+                                </GroupBox>
+                            </ListBoxItem>
+                        </ListBox>
+                    </GroupBox>
+-->
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Задачи">
+                
+            </TabItem>
+            <TabItem Header="Проекты">
+
+            </TabItem>
+            <TabItem Header="Журнал">
+
+            </TabItem>
+            <TabItem Header="Авторизация">                
+                
+            </TabItem>
+        </TabControl>
+        <StatusBar Margin="0" Height="30" VerticalAlignment="Bottom">
+            <Button x:Name="b" Content="Next"  Width="100" Margin="5,0,0,0" />
+        </StatusBar>
+
+    </Grid>
+</Window>
