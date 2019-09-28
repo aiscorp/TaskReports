@@ -3,88 +3,122 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TaskReports"
+        
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        
+        xmlns:local="clr-namespace:TaskReports"        
         mc:Ignorable="d"
-        Title="Task Reports" Height="450" Width="600" MinHeight="300" MinWidth="400">
+        Title="Task Reports" Height="400" Width="600" MinHeight="300" MinWidth="400">
     <Grid>
         <TabControl Margin="0,0,0,30" MinHeight="100" MinWidth="200">
             <TabItem Header="Главная">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="20"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="3*"/>
                     </Grid.RowDefinitions>
 
-                    <DockPanel Grid.Row="0" Grid.Column="0" MinHeight="30">
-                        <Label Content="Проект" MinWidth="50" VerticalAlignment="Center"/>
+                    <DockPanel Grid.Row="0" Grid.Column="0">
+                        <Label Content="Категории" MinWidth="100" VerticalAlignment="Center"/>
                         <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch">
                             <ComboBoxItem>
-                                <StackPanel>
-                                    <TextBlock Text="Название проекта"/>
-                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
-                                </StackPanel>
+                                <DockPanel>
+                                    <fa:ImageAwesome Height="20" Icon="Tag" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
+                                    <TextBlock Text="Описание категории" FontStyle="Italic" Foreground="Gray" DockPanel.Dock="Bottom" />
+                                    <TextBlock Text="Название категории" />
+                                </DockPanel>
                             </ComboBoxItem>
                             <ComboBoxItem>
-                                <StackPanel>
-                                    <TextBlock Text="Название проекта"/>
-                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
-                                </StackPanel>
+                                <DockPanel>
+                                    <fa:ImageAwesome Height="20" Icon="Tag" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
+                                    <TextBlock Text="Описание категории" FontStyle="Italic" Foreground="Gray" DockPanel.Dock="Bottom" />
+                                    <TextBlock Text="Название категории" />
+                                </DockPanel>
                             </ComboBoxItem>
-                            <ComboBoxItem>
-                                <StackPanel>
-                                    <TextBlock Text="Название проекта"/>
-                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
-                                </StackPanel>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <StackPanel>
-                                    <TextBlock Text="Название проекта"/>
-                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
-                                </StackPanel>
-                            </ComboBoxItem>
-
                         </ComboBox>
-
                     </DockPanel>
 
                     <DockPanel Grid.Row="1" Grid.Column="0" MinHeight="30">
-                        <Label Content="Проект" MinWidth="50" VerticalAlignment="Center"/>
+                        <Label Content="Проект" MinWidth="100" VerticalAlignment="Center"/>
                         <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch">
                             <ComboBoxItem>
-                                <StackPanel>
-                                    <TextBlock Text="Название проекта"/>
-                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
-                                </StackPanel>
+                                <DockPanel>
+                                    <fa:ImageAwesome Height="20" Icon="Tasks" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
+                                    <TextBlock Text="Описание категории" FontStyle="Italic" Foreground="Gray" DockPanel.Dock="Bottom" />
+                                    <TextBlock Text="Название категории" />
+                                </DockPanel>
                             </ComboBoxItem>
                             <ComboBoxItem>
-                                <StackPanel>
-                                    <TextBlock Text="Название проекта"/>
-                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
-                                </StackPanel>
+                                <DockPanel>
+                                    <fa:ImageAwesome Height="20" Icon="Tasks" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
+                                    <TextBlock Text="Описание категории" FontStyle="Italic" Foreground="Gray" DockPanel.Dock="Bottom" />
+                                    <TextBlock Text="Название категории" />
+                                </DockPanel>
                             </ComboBoxItem>
-                            <ComboBoxItem>
-                                <StackPanel>
-                                    <TextBlock Text="Название проекта"/>
-                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
-                                </StackPanel>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <StackPanel>
-                                    <TextBlock Text="Название проекта"/>
-                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
-                                </StackPanel>
-                            </ComboBoxItem>
-
                         </ComboBox>
-
                     </DockPanel>
+
+                    <DockPanel Grid.Row="3" Grid.Column="0" >
+                        <fa:ImageAwesome Height="20" Icon="Paperclip" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
+                        <TextBlock Text="Задача" Width="70" TextWrapping="WrapWithOverflow" VerticalAlignment="Center"/>
+                        <TextBox Text="Введите название задачи " VerticalContentAlignment="Center" Margin="5, 5, 5, 5"/>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="4" Grid.Column="0" >
+                        <fa:ImageAwesome Height="20" Icon="StickyNoteOutline" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
+                        <TextBlock Text="Описание задачи" Width="70" TextWrapping="WrapWithOverflow" VerticalAlignment="Center"/>
+                        <TextBox Text="Подробное описание текущей задачи"  Margin="5, 5, 5, 5"/>
+                    </DockPanel>
+
+
+
+                    <DockPanel Grid.Row="0" Grid.Column="2" >
+                        <DockPanel DockPanel.Dock="Top">
+                            <fa:ImageAwesome Height="20" Icon="ClockOutline" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
+                            <TextBlock Text="Выбор времени начала (окончания) задачи" TextWrapping="WrapWithOverflow"  Margin="5, 5, 5, 5"/>
+                        </DockPanel>                       
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="1" Grid.Column="2" >
+                        <extToolkit:DateTimePicker Value="{x:Static sys:DateTime.Now}" Format="Custom" FormatString="yyyy-MM-dd     HH:mm" AllowSpin="True" Height="40" FontSize="20"/>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="3" Grid.Column="2">
+                        <DockPanel DockPanel.Dock="Top">
+                            <fa:ImageAwesome Height="20" Foreground="Gray" Icon="HourglassHalf" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
+                            <TextBlock Text="00:00m" IsEnabled="False" FontSize="20" VerticalAlignment="Center" Foreground="Gray" Margin="5, 5, 5, 5"/>
+                        </DockPanel>
+                    </DockPanel>
+
+
+
+                    <DockPanel Grid.Row="4" Grid.Column="2" VerticalAlignment="Center">
+                        <Button DockPanel.Dock="Top" Margin="5, 5, 5, 5">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Height="20" Icon="Plus" Margin="5, 5, 5, 5" />
+                                <TextBlock Text="Старт" FontSize="20" TextWrapping="WrapWithOverflow"  Margin="5, 5, 5, 5"/>
+                            </StackPanel>
+                        </Button>
+                        <Button DockPanel.Dock="Bottom" Margin="5, 5, 5, 5">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Height="20"  Icon="HandPaperOutline" Margin="5, 5, 5, 5" />
+                                <TextBlock Text="Стоп" FontSize="20" TextWrapping="WrapWithOverflow"  Margin="5, 5, 5, 5"/>
+                            </StackPanel>
+                        </Button>
+                    </DockPanel>
+
+
+
 
 
                     <!--
@@ -127,7 +161,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Задачи">
-                
+
             </TabItem>
             <TabItem Header="Проекты">
 
@@ -135,12 +169,38 @@
             <TabItem Header="Журнал">
 
             </TabItem>
-            <TabItem Header="Авторизация">                
-                
+            <TabItem Header="Авторизация">
+
             </TabItem>
         </TabControl>
         <StatusBar Margin="0" Height="30" VerticalAlignment="Bottom">
-            <Button x:Name="b" Content="Next"  Width="100" Margin="5,0,0,0" />
+            <StatusBarItem>
+                <StackPanel Height="30" Margin="-3,-3" Orientation="Horizontal">
+                    <Button BorderBrush="Transparent">
+                        <fa:ImageAwesome Height="25" Foreground="Blue" Icon="ArrowCircleLeft" />
+                    </Button>
+                    <Button BorderBrush="Transparent">
+                        <fa:ImageAwesome Height="25" Foreground="Blue" Icon="ArrowCircleRight" />
+                    </Button>
+                </StackPanel>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal" >
+                    <fa:ImageAwesome Height="20" Foreground="Green" Icon="LightbulbOutline" DockPanel.Dock="Left" Margin="2, 2" />
+                    <TextBlock Text="Соединение с сервером" Margin="5, 2" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StatusBarItem>
+
+            <Separator/>
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal" >
+                    <fa:ImageAwesome Height="20" Foreground="Gray" Icon="User" DockPanel.Dock="Left" Margin="2, 2" />
+                    <TextBlock Text="User Name" Margin="5, 2" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StatusBarItem>
+
+
         </StatusBar>
 
     </Grid>
