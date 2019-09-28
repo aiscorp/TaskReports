@@ -22,16 +22,71 @@
                         <RowDefinition Height="3*"/>
                     </Grid.RowDefinitions>
 
-
-                    <StackPanel Grid.Row="0" Grid.Column="0" MinHeight="30" Orientation="Horizontal">
+                    <DockPanel Grid.Row="0" Grid.Column="0" MinHeight="30">
                         <Label Content="Проект" MinWidth="50" VerticalAlignment="Center"/>
                         <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch">
-                            <ComboBoxItem Content="Project 1"/>
-                            <ComboBoxItem Content="Project 2"/>
-                            <ComboBoxItem Content="Project 3"/>
+                            <ComboBoxItem>
+                                <StackPanel>
+                                    <TextBlock Text="Название проекта"/>
+                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
+                                </StackPanel>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <StackPanel>
+                                    <TextBlock Text="Название проекта"/>
+                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
+                                </StackPanel>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <StackPanel>
+                                    <TextBlock Text="Название проекта"/>
+                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
+                                </StackPanel>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <StackPanel>
+                                    <TextBlock Text="Название проекта"/>
+                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
+                                </StackPanel>
+                            </ComboBoxItem>
+
                         </ComboBox>
-                    </StackPanel>
-                    
+
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="1" Grid.Column="0" MinHeight="30">
+                        <Label Content="Проект" MinWidth="50" VerticalAlignment="Center"/>
+                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch">
+                            <ComboBoxItem>
+                                <StackPanel>
+                                    <TextBlock Text="Название проекта"/>
+                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
+                                </StackPanel>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <StackPanel>
+                                    <TextBlock Text="Название проекта"/>
+                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
+                                </StackPanel>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <StackPanel>
+                                    <TextBlock Text="Название проекта"/>
+                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
+                                </StackPanel>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <StackPanel>
+                                    <TextBlock Text="Название проекта"/>
+                                    <TextBlock Text="Описание проекта" FontStyle="Italic"/>
+                                </StackPanel>
+                            </ComboBoxItem>
+
+                        </ComboBox>
+
+                    </DockPanel>
+
+
                     <!--
                     <GroupBox Header="Задания">
                         <ListBox>
