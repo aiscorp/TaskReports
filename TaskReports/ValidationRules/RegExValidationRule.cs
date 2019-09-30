@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using TaskReportLib;
 
 namespace TaskReports.ValidationRules
 {
@@ -15,7 +16,7 @@ namespace TaskReports.ValidationRules
 
         private Regex _Regex;
 
-
+        
 
         public string Pattern
         {
