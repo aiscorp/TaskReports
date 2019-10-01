@@ -55,11 +55,11 @@ namespace TaskReportLib.Tests
             User user1 = new User(userNameIn, passwordIn);
                        
 
-            user1.UserName = userNameIn;
-            user1.Password = passwordIn;
+           // user1.UserName = userNameIn;
+            //user1.PasswordHash = passwordIn;
 
             userNameActual = user1.UserName;
-            passwordHashActual = user1.Password;
+            passwordHashActual = user1.PasswordHash;
 
             // assert
 
@@ -68,6 +68,57 @@ namespace TaskReportLib.Tests
 
         }
 
+        [TestMethod]
+        public void CheckAutotification()
+        {
+            // arange
+
+            string userNameIn = "ivan";
+            string passwordIn = "abc123";
+            
+            bool isCorrect1, isCorrect2;
+
+            // act
+
+            User user1 = new User(userNameIn, passwordIn);
+
+            isCorrect1 = user1.CheckAutotification(passwordIn);
+            isCorrect2 = user1.CheckAutotification(userNameIn, passwordIn);
+
+
+            // assert
+
+            Assert.IsTrue(isCorrect1);
+            Assert.IsTrue(isCorrect2);
+
+        }
+
+        [TestMethod]
+        public void BlankUser()
+        {
+            // arange
+
+
+            string userNameActual;
+            string passwordHashActual;
+
+            // act
+
+            User user1 = new User();
+
+
+            // user1.UserName = userNameIn;
+            //user1.PasswordHash = passwordIn;
+
+            userNameActual = user1.UserName;
+            passwordHashActual = user1.PasswordHash;
+
+            // assert
+
+            Assert.IsNull(userNameActual);
+            Assert.IsNull(passwordHashActual);
+
+        }
 
     }
 }

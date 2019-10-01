@@ -29,7 +29,9 @@ namespace TaskReports.ViewModel
         /// </summary>
         public ViewModelLocator()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            var services = SimpleIoc.Default;
+            ServiceLocator.SetLocatorProvider(() => services);
+
 
             ////if (ViewModelBase.IsInDesignModeStatic)
             ////{
@@ -42,17 +44,16 @@ namespace TaskReports.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<MainViewModel>();
+            //SimpleIoc.Default.Register<MainViewModel>();
+
+            services.Register<MainWindowViewModel>();
+
         }
 
-        public MainViewModel Main
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
-        
+        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+
+        public MainWindowViewModel MainWindow => ServiceLocator.Current.GetInstance<MainWindowViewModel>();
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

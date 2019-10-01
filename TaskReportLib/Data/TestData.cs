@@ -35,5 +35,10 @@ namespace TaskReportLib.Data
             new Task { Id = 3, Name = "Задача 3", Text = "Описание задачи", Project = Projects[0], Tag = Tags[3] }
         };
 
+        static TestData()
+        {
+
+        }   
+
     }
 }

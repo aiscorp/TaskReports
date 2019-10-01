@@ -12,7 +12,8 @@
         xmlns:data="clr-namespace:TaskReportLib.Data;assembly=TaskReportLib"
         xmlns:local="clr-namespace:TaskReports"        
         mc:Ignorable="d"
-        Title="Task Reports" Height="400" Width="600" MinHeight="320" MinWidth="400">
+        Title="{Binding MainWindowTitle}" Height="400" Width="600" MinHeight="320" MinWidth="400"
+        DataContext="{Binding MainWindow, Source={StaticResource Locator}}">
     <Grid>
         <TabControl Margin="0,0,0,30" MinHeight="100" MinWidth="200">
             <TabItem Header="Главная">
@@ -187,19 +188,19 @@
                     <GroupBox Header="Учетная запись" Grid.Column="2" Margin="2,2">
                         <DockPanel>
                             <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" ItemWidth="100">
-                                <Button Content="Изменить" Margin="5,2" Padding="10,5"/>
-                                <Button Content="Применить" Margin="5,2" Padding="10,5" IsEnabled="False"/>
-                                <Button Content="Отменить" Margin="5,2" Padding="10,5" IsEnabled="False"/>
+                                <Button Content="Log In" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn_Invert}" Command="{Binding LogInCommand}"/>
+                                <Button Content="Log Out" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn}"/>
+                                <Button Content="Change password" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn}"/>
                             </WrapPanel>
                             
                             <TextBlock Text="Данные пользователя" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5"/>
                             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                                 <TextBlock Text="Логин" Margin="5,2" MinWidth="50"/>
-                                <TextBox Margin="5,2" Text="UserName" IsEnabled="False"/>
+                                <TextBox Margin="5,2" Text="{Binding UserName}" IsEnabled="{Binding IsLoggedIn_Invert}"/>
                             </DockPanel>
                             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                                 <TextBlock Text="Пароль" Margin="5,2" MinWidth="50"/>
-                                <PasswordBox Margin="5,2" Password="password" IsEnabled="False"/>
+                                <TextBox  Margin="5,2" Text="{Binding Password}" IsEnabled="{Binding IsLoggedIn_Invert}"/>
                             </DockPanel>
 
                             <TextBlock Text="Дополнительная информация" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5" TextWrapping="WrapWithOverflow"/>
@@ -256,8 +257,8 @@
             <Separator/>
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal" >
-                    <fa:ImageAwesome Height="20" Foreground="Gray" Icon="User" DockPanel.Dock="Left" Margin="2, 2" />
-                    <TextBlock Text="User Name" Margin="5, 2" VerticalAlignment="Center"/>
+                    <fa:ImageAwesome Height="20" Foreground="{Binding IsLoggedInColor}" Icon="User" DockPanel.Dock="Left" Margin="2, 2" />
+                    <TextBlock Text="{Binding UserName}" Margin="5, 2" VerticalAlignment="Center"/>
                 </StackPanel>
             </StatusBarItem>
 

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\TestData.cs" />
+    <Compile Include="Entityes\CurrentUser.cs" />
     <Compile Include="Entityes\Project.cs" />
     <Compile Include="Entityes\DataServer.cs" />
     <Compile Include="Entityes\Tag.cs" />
