@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -15,6 +16,7 @@
         Title="{Binding MainWindowTitle}" Height="400" Width="600" MinHeight="320" MinWidth="400"
         DataContext="{Binding MainWindow, Source={StaticResource Locator}}">
     <Grid>
+
         <TabControl Margin="0,0,0,30" MinHeight="100" MinWidth="200">
             <TabItem Header="Главная">
                 <Grid>
@@ -37,7 +39,7 @@
                         <Label Content="Категории" MinWidth="100" VerticalAlignment="Center"/>
                         <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{x:Static data:TestData.Tags}" SelectedIndex="0" MinHeight="20" MaxHeight="40">
                             <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="{x:Type entityes:Tag}">  
+                                <DataTemplate DataType="{x:Type entityes:Tag}">
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                             <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color}"/>
@@ -140,7 +142,7 @@
                             <DataGridTextColumn Header="Задача" MinWidth="100" Width="*"/>
                             <DataGridTextColumn Header="Описание задачи" Width="2*"/>
                         </DataGrid.Columns>
-                       
+
                     </DataGrid>
 
 
@@ -181,18 +183,18 @@
                     <StackPanel Grid.Column="1" Background="Gray" Margin="3,0,5,0"/>
 
                     <GroupBox Header="Настройка базы данных" Grid.Column="0" Margin="2,2">
-                        
-                        
+
+
                     </GroupBox>
 
                     <GroupBox Header="Учетная запись" Grid.Column="2" Margin="2,2">
                         <DockPanel>
                             <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" ItemWidth="100">
-                                <Button Content="Log In" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn_Invert}" Command="{Binding LogInCommand}"/>
-                                <Button Content="Log Out" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn}" Command="{Binding LogOutCommand}"/>
-                                <Button Content="Change password" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn}" Command="{Binding ChangePasswordCommand}"/>
+                                <Button Content="Log In" Margin="5,2" Padding="10,5"  Command="{Binding LogInCommand}"/>
+                                <Button Content="Log Out" Margin="5,2" Padding="10,5" Command="{Binding LogOutCommand}"/>
+                                <Button Content="Change password" Margin="5,2" Padding="10,5" Command="{Binding ChangePasswordCommand}"/>
                             </WrapPanel>
-                            
+
                             <TextBlock Text="Данные пользователя" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5"/>
                             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                                 <TextBlock Text="Логин" Margin="5,2" MinWidth="50"/>
@@ -209,7 +211,7 @@
                                 <TextBlock Text="Статус подключения:" Margin="5,2"/>
                                 <TextBlock Text="Нет соединения" Margin="5,2"/>
                             </WrapPanel>
-                            
+
                             <WrapPanel DockPanel.Dock="Top">
                                 <TextBlock Text="Время подключения:" Margin="5,2"/>
                                 <TextBlock Text="yyyy-MM-dd,  HH:mm" Margin="5,2"/>
@@ -220,19 +222,19 @@
                                 <TextBlock Text="HH:mm" Margin="5,2"/>
                             </WrapPanel>
 
-                            
 
-                           
-                            
+
+
+
                         </DockPanel>
-                        
-                        
-                        
+
+
+
 
                     </GroupBox>
 
 
-                </Grid>  
+                </Grid>
             </TabItem>
         </TabControl>
         <StatusBar Margin="0" Height="30" VerticalAlignment="Bottom">
