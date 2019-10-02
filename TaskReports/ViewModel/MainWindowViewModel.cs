@@ -18,8 +18,6 @@ using System.Windows.Threading;
 
 namespace TaskReports.ViewModel
 {
-
-    //public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public class MainWindowViewModel : ViewModelBase
     {
 
@@ -34,50 +32,37 @@ namespace TaskReports.ViewModel
         private string _userName;
         public string UserName
         {
-            get
-            {
-                if (IsLoggedIn)
-                    return CurrentUser.UserName;
-                else
-                    return _userName;
-            }
+            get => IsLoggedIn ? CurrentUser.UserName : _userName;
             set => Set(ref _userName, value, "UserName");
         }
 
         private string _password = "******";
         public string Password
         {
-            set => Set(ref _password, value);
-            get => _password;
+            get => CurrentUser.IsLoggedIn ? _password="******" : _password;
+            set => _password = value;
+           // Не ясно зачем используеюся код по примеру ниже, т.к. он не влияет на результат
+           // set => Set(ref _password, CurrentUser.IsLoggedIn ? "******" : value);
+        }
+
+        public string LoggedInString
+        {
+            get => CurrentUser.IsLoggedIn ? "Подключен" : "Не подключен";
         }
 
         public bool IsLoggedIn
         {
-            get
-            {
-                //RaisePropertyChanged("IsLoggedIn");
-                return CurrentUser.IsLoggedIn;
-            }
-           // set => RaisePropertyChanged("IsLoggedIn");
+            get => CurrentUser.IsLoggedIn;
         }
 
         public bool IsLoggedOut
         {
-            get
-            {
-                //RaisePropertyChanged("IsLoggedOut");
-                return !CurrentUser.IsLoggedIn;
-            }
-            //set => RaisePropertyChanged("IsLoggedOut");
+            get => !CurrentUser.IsLoggedIn;
         }
 
         public SolidColorBrush IsLoggedInColor
         {
-            get
-            {
-                return new SolidColorBrush(IsLoggedIn ? Colors.Green : Colors.Gray);
-            }
-            set => RaisePropertyChanged("IsLoggedInColor");
+            get => new SolidColorBrush(IsLoggedIn ? Colors.Green : Colors.Gray);
         }
 
         public ICommand LogInCommand { get; private set; }
@@ -95,7 +80,7 @@ namespace TaskReports.ViewModel
         {
             CurrentUser.TryLogIn(UserName, Password);
 
-            Password = "******";
+            //Password = "******";
 
             UpdateProperties();
         }
@@ -104,7 +89,7 @@ namespace TaskReports.ViewModel
         {
             CurrentUser.LogOut();
 
-            Password = "******";
+            //Password = "******";
 
             UpdateProperties();
         }
@@ -112,7 +97,6 @@ namespace TaskReports.ViewModel
         private void OnRefreshChangePasswordCommandExecute()
         {
             //CurrentUser.TryChangePassword(Password);
-
             //Password = "******";
 
             UpdateProperties();
@@ -126,11 +110,14 @@ namespace TaskReports.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        // Можно ли избавиться от данного метода?
         private void UpdateProperties()
         {
             RaisePropertyChanged("IsLoggedIn");
             RaisePropertyChanged("IsLoggedOut");
             RaisePropertyChanged("IsLoggedInColor");
+            RaisePropertyChanged("LoggedInString");
+            RaisePropertyChanged("Password"); 
         }
 
     }

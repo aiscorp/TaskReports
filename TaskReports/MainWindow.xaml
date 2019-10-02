@@ -209,7 +209,7 @@
 
                             <WrapPanel DockPanel.Dock="Top" >
                                 <TextBlock Text="Статус подключения:" Margin="5,2"/>
-                                <TextBlock Text="Нет соединения" Margin="5,2"/>
+                                <TextBlock Text="{Binding LoggedInString}" Margin="5,2"/>
                             </WrapPanel>
 
                             <WrapPanel DockPanel.Dock="Top">
