@@ -3,15 +3,124 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TaskReports"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        
+        xmlns:entityes="clr-namespace:TaskReportLib.Entityes;assembly=TaskReportLib"
+        xmlns:data="clr-namespace:TaskReportLib.Data;assembly=TaskReportLib"
+        xmlns:local="clr-namespace:TaskReports"        
         mc:Ignorable="d"
-        Title="Task Reports" Height="450" Width="600" MinHeight="300" MinWidth="400">
+        Title="{Binding MainWindowTitle}" Height="400" Width="600" MinHeight="320" MinWidth="400"
+        DataContext="{Binding MainWindow, Source={StaticResource Locator}}">
     <Grid>
+
         <TabControl Margin="0,0,0,30" MinHeight="100" MinWidth="200">
             <TabItem Header="Главная">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="5" Background="Gray" Margin="3,0,5,0"/>
+
+                    <DockPanel Grid.Row="0" Grid.Column="0">
+                        <Label Content="Категории" MinWidth="100" VerticalAlignment="Center"/>
+                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{x:Static data:TestData.Tags}" SelectedIndex="0" MinHeight="20" MaxHeight="40">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type entityes:Tag}">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color}"/>
+                                            <TextBlock Text="{Binding Name}" />
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Text}" FontStyle="Italic" Foreground="Gray" DockPanel.Dock="Bottom"  TextWrapping="WrapWithOverflow" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="1" Grid.Column="0" MinHeight="30">
+                        <Label Content="Проект" MinWidth="100" VerticalAlignment="Center"/>
+                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{x:Static data:TestData.Projects}" SelectedIndex="0" MinHeight="20" MaxHeight="40">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type entityes:Tag}">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color}"/>
+                                            <TextBlock Text="{Binding Name}" />
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Text}" FontStyle="Italic" Foreground="Gray" DockPanel.Dock="Bottom"  TextWrapping="WrapWithOverflow" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="3" Grid.Column="0" >
+                        <fa:ImageAwesome Height="20" Icon="Paperclip" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
+                        <TextBlock Text="Задача" Width="70" TextWrapping="WrapWithOverflow" VerticalAlignment="Center"/>
+                        <TextBox Text="Введите название задачи " VerticalContentAlignment="Center" TextWrapping="WrapWithOverflow" Margin="5, 5, 5, 5"/>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="4" Grid.Column="0" >
+                        <fa:ImageAwesome Height="20" Icon="StickyNoteOutline" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
+                        <TextBlock Text="Описание задачи" Width="70" TextWrapping="WrapWithOverflow" VerticalAlignment="Center"/>
+                        <TextBox Text="Подробное описание текущей задачи"  Margin="5, 5, 5, 5" TextWrapping="WrapWithOverflow"/>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="0" Grid.Column="2" >
+                        <DockPanel DockPanel.Dock="Top" MinHeight="20" MaxHeight="40" VerticalAlignment="Center">
+                            <fa:ImageAwesome Height="20" Icon="ClockOutline" Margin="5, 5, 5, 5" />
+                            <TextBlock Text="Выбор времени начала (окончания) задачи" TextWrapping="WrapWithOverflow"  Margin="5, 5, 5, 5"/>
+                        </DockPanel>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="1" Grid.Column="2" >
+                        <extToolkit:DateTimePicker Value="{x:Static sys:DateTime.Now}" TextAlignment="Center"  Format="Custom" FormatString="HH:mm, dd.MM.yyyy" AllowSpin="True" MinHeight="30" MaxHeight="40" FontSize="20"/>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center">
+                        <fa:ImageAwesome Height="20" Foreground="Gray" Icon="HourglassHalf" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
+                        <TextBlock Text="00:00m" IsEnabled="False" FontSize="20" VerticalAlignment="Center" Foreground="Gray" Margin="5, 5, 5, 5"/>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="4" Grid.Column="2" VerticalAlignment="Center">
+                        <Button DockPanel.Dock="Top" Margin="5, 5, 5, 5" Background="#FF60C33F">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Height="20" Icon="Plus" Margin="5, 5, 5, 5" />
+                                <TextBlock Text="Старт" FontSize="20" TextWrapping="WrapWithOverflow"  Margin="5, 5, 5, 5"/>
+                            </StackPanel>
+                        </Button>
+                        <Button DockPanel.Dock="Bottom" Margin="5, 5, 5, 5" Background="#FFE25B1E">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Height="20"  Icon="HandPaperOutline" Margin="5, 5, 5, 5" />
+                                <TextBlock Text="Стоп" FontSize="20" TextWrapping="WrapWithOverflow"  Margin="5, 5, 5, 5"/>
+                            </StackPanel>
+                        </Button>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Редактирование">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -19,73 +128,143 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
+                    <DataGrid Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="7" AutoGenerateColumns="False" DataContext="{x:Static data:TestData.Tasks}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" MinWidth="20"/>
+                            <DataGridTextColumn Header="Категория" MinWidth="100"/>
+                            <DataGridTextColumn Header="Проект" MinWidth="100"/>
+                            <DataGridTextColumn Header="Задача" MinWidth="100" Width="*"/>
+                            <DataGridTextColumn Header="Описание задачи" Width="2*"/>
+                        </DataGrid.Columns>
 
-                    <StackPanel Grid.Row="0" Grid.Column="0" MinHeight="30" Orientation="Horizontal">
-                        <Label Content="Проект" MinWidth="50" VerticalAlignment="Center"/>
-                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch">
-                            <ComboBoxItem Content="Project 1"/>
-                            <ComboBoxItem Content="Project 2"/>
-                            <ComboBoxItem Content="Project 3"/>
-                        </ComboBox>
-                    </StackPanel>
-                    
-                    <!--
-                    <GroupBox Header="Задания">
-                        <ListBox>
-                            <ListBoxItem HorizontalContentAlignment="Stretch">
-                                <GroupBox Header="Задание 1">
-                                    <StackPanel>
-                                        <TextBlock Text="Время"/>
-                                        <TextBlock Text="Сервер"/>
-                                        <TextBlock Text="Отправитель"/>
-                                        <TextBlock Text="Получатели"/>
-                                    </StackPanel>
-                                </GroupBox>
-                            </ListBoxItem>
-                            <ListBoxItem HorizontalContentAlignment="Stretch">
-                                <GroupBox Header="Задание 1">
-                                    <StackPanel>
-                                        <TextBlock Text="Время"/>
-                                        <TextBlock Text="Сервер"/>
-                                        <TextBlock Text="Отправитель"/>
-                                        <TextBlock Text="Получатели"/>
-                                    </StackPanel>
-                                </GroupBox>
-                            </ListBoxItem>
-                            <ListBoxItem HorizontalContentAlignment="Stretch">
-                                <GroupBox Header="Задание 1">
-                                    <StackPanel>
-                                        <TextBlock Text="Время"/>
-                                        <TextBlock Text="Сервер"/>
-                                        <TextBlock Text="Отправитель"/>
-                                        <TextBlock Text="Получатели"/>
-                                    </StackPanel>
-                                </GroupBox>
-                            </ListBoxItem>
-                        </ListBox>
-                    </GroupBox>
--->
+                    </DataGrid>
+
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Задачи">
-                
-            </TabItem>
-            <TabItem Header="Проекты">
-
-            </TabItem>
             <TabItem Header="Журнал">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
 
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+
+
+
+                </Grid>
             </TabItem>
-            <TabItem Header="Авторизация">                
-                
+            <TabItem Header="Настройки">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="1" Background="Gray" Margin="3,0,5,0"/>
+
+                    <GroupBox Header="Настройка базы данных" Grid.Column="0" Margin="2,2">
+
+
+                    </GroupBox>
+
+                    <GroupBox Header="Учетная запись" Grid.Column="2" Margin="2,2">
+                        <DockPanel>
+                            <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" ItemWidth="100">
+                                <Button Content="Log In" Margin="5,2" Padding="10,5"  Command="{Binding LogInCommand}"/>
+                                <Button Content="Log Out" Margin="5,2" Padding="10,5" Command="{Binding LogOutCommand}"/>
+                                <Button Content="Change password" Margin="5,2" Padding="10,5" Command="{Binding ChangePasswordCommand}"/>
+                            </WrapPanel>
+
+                            <TextBlock Text="Данные пользователя" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5"/>
+                            <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                                <TextBlock Text="Логин" Margin="5,2" MinWidth="50"/>
+                                <TextBox Margin="5,2" Text="{Binding UserName}" IsEnabled="{Binding IsLoggedIn_Invert}"/>
+                            </DockPanel>
+                            <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                                <TextBlock Text="Пароль" Margin="5,2" MinWidth="50"/>
+                                <TextBox  Margin="5,2" Text="{Binding Password}"/>
+                            </DockPanel>
+
+                            <TextBlock Text="Дополнительная информация" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5" TextWrapping="WrapWithOverflow"/>
+
+                            <WrapPanel DockPanel.Dock="Top" >
+                                <TextBlock Text="Статус подключения:" Margin="5,2"/>
+                                <TextBlock Text="Нет соединения" Margin="5,2"/>
+                            </WrapPanel>
+
+                            <WrapPanel DockPanel.Dock="Top">
+                                <TextBlock Text="Время подключения:" Margin="5,2"/>
+                                <TextBlock Text="yyyy-MM-dd,  HH:mm" Margin="5,2"/>
+                            </WrapPanel>
+
+                            <WrapPanel DockPanel.Dock="Top">
+                                <TextBlock Text="Продолжительность:" Margin="5,2"/>
+                                <TextBlock Text="HH:mm" Margin="5,2"/>
+                            </WrapPanel>
+
+
+
+
+
+                        </DockPanel>
+
+
+
+
+                    </GroupBox>
+
+
+                </Grid>
             </TabItem>
         </TabControl>
         <StatusBar Margin="0" Height="30" VerticalAlignment="Bottom">
-            <Button x:Name="b" Content="Next"  Width="100" Margin="5,0,0,0" />
+            <StatusBarItem>
+                <StackPanel Height="30" Margin="-3,-3" Orientation="Horizontal">
+                    <Button BorderBrush="Transparent">
+                        <fa:ImageAwesome Height="25" Foreground="Blue" Icon="ArrowCircleLeft" />
+                    </Button>
+                    <Button BorderBrush="Transparent">
+                        <fa:ImageAwesome Height="25" Foreground="Blue" Icon="ArrowCircleRight" />
+                    </Button>
+                </StackPanel>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal" >
+                    <fa:ImageAwesome Height="20" Foreground="Green" Icon="LightbulbOutline" DockPanel.Dock="Left" Margin="2, 2" />
+                    <TextBlock Text="Соединение с сервером" Margin="5, 2" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StatusBarItem>
+
+            <Separator/>
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal" >
+                    <fa:ImageAwesome Height="20" Foreground="{Binding IsLoggedInColor}" Icon="User" DockPanel.Dock="Left" Margin="2, 2" />
+                    <TextBlock Text="{Binding UserName}" Margin="5, 2" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StatusBarItem>
+
+
         </StatusBar>
 
     </Grid>
