@@ -50,7 +50,7 @@ namespace TaskReports.ViewModel
 
         }
 
-        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+        //public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
         public MainWindowViewModel MainWindow => ServiceLocator.Current.GetInstance<MainWindowViewModel>();
 

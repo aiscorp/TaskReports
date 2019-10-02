@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-
+using System.ComponentModel;
 
 namespace TaskReportLib.Entityes
 {

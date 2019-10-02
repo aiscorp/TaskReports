@@ -9,10 +9,14 @@ using System.Windows.Media;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using System.Windows.Controls;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace TaskReports.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase
+
+    //public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
+    public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
 
         private string mainWindowTitle = "Task Reprots v0.01b";
@@ -47,11 +51,13 @@ namespace TaskReports.ViewModel
         public bool IsLoggedIn
         {
             get => CurrentUser.IsLoggedIn;
+            //set => OnPropertyChanged(nameof(IsLoggedIn));
         }
 
         public bool IsLoggedIn_Invert
         {
             get => !CurrentUser.IsLoggedIn;
+            //set => OnPropertyChanged(nameof(IsLoggedIn_Invert));
         }
 
         public SolidColorBrush IsLoggedInColor
@@ -60,6 +66,7 @@ namespace TaskReports.ViewModel
             {
                 return new SolidColorBrush(IsLoggedIn ? Colors.Green : Colors.Gray);
             }
+            //set => OnPropertyChanged(nameof(IsLoggedInColor));
         }
 
         public ICommand LogInCommand { get; }
@@ -77,12 +84,24 @@ namespace TaskReports.ViewModel
             //string password = pboxUserPassword.SecurePassword;
             bool unUseResult = CurrentUser.TryLogIn(UserName, Password);
 
-            
+            Password = "******";
+
+            OnPropertyChanged(nameof(UserName));
+            OnPropertyChanged(nameof(Password));
+            OnPropertyChanged(nameof(IsLoggedIn));
+            OnPropertyChanged(nameof(IsLoggedIn_Invert));
+            OnPropertyChanged(nameof(IsLoggedInColor));
+
         }
 
 
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
+        protected virtual void OnPropertyChanged(string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
 
     }
