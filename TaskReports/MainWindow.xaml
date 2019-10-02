@@ -188,9 +188,9 @@
                     <GroupBox Header="Учетная запись" Grid.Column="2" Margin="2,2">
                         <DockPanel>
                             <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" ItemWidth="100">
-                                <Button Content="Log In" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn_Invert}" Command="{Binding LogInCommand}"/>
-                                <Button Content="Log Out" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn}" Command="{Binding LogOutCommand}"/>
-                                <Button Content="Change password" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn}" Command="{Binding ChangePasswordCommand}"/>
+                                <Button Content="Log In" Margin="5,2" Padding="10,5"  Command="{Binding LogInCommand}"/>
+                                <Button Content="Log Out" Margin="5,2" Padding="10,5" Command="{Binding LogOutCommand}"/>
+                                <Button Content="Change password" Margin="5,2" Padding="10,5" Command="{Binding ChangePasswordCommand}"/>
                             </WrapPanel>
                             
                             <TextBlock Text="Данные пользователя" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5"/>

@@ -21,6 +21,7 @@ namespace TaskReportLib.Entityes
             // Загрузка последнего залогинившегося пользователя будет организована позднее
             // на данный момент костыль root, root1234
             currentUser = new User("root", "root1234");
+            IsLoggedIn = false;
         }
 
         public static bool TryLogIn(string userName, string password)
