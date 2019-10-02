@@ -63,7 +63,8 @@ namespace TaskReportLib.Entityes
         }
         public static void LogOut()
         {
-            // Не разработано
+            IsLoggedIn = false;
+            // Логика далее не проработана
         }
 
         private static void LoadUserData()

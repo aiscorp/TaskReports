@@ -189,8 +189,8 @@
                         <DockPanel>
                             <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" ItemWidth="100">
                                 <Button Content="Log In" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn_Invert}" Command="{Binding LogInCommand}"/>
-                                <Button Content="Log Out" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn}"/>
-                                <Button Content="Change password" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn}"/>
+                                <Button Content="Log Out" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn}" Command="{Binding LogOutCommand}"/>
+                                <Button Content="Change password" Margin="5,2" Padding="10,5" IsEnabled="{Binding IsLoggedIn}" Command="{Binding ChangePasswordCommand}"/>
                             </WrapPanel>
                             
                             <TextBlock Text="Данные пользователя" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5"/>
@@ -200,7 +200,7 @@
                             </DockPanel>
                             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                                 <TextBlock Text="Пароль" Margin="5,2" MinWidth="50"/>
-                                <TextBox  Margin="5,2" Text="{Binding Password}" IsEnabled="{Binding IsLoggedIn_Invert}"/>
+                                <TextBox  Margin="5,2" Text="{Binding Password}"/>
                             </DockPanel>
 
                             <TextBlock Text="Дополнительная информация" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5" TextWrapping="WrapWithOverflow"/>

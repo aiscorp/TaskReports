@@ -70,11 +70,14 @@ namespace TaskReports.ViewModel
         }
 
         public ICommand LogInCommand { get; }
-
+        public ICommand LogOutCommand { get; }
+        public ICommand ChangePasswordCommand { get; }
 
         public MainWindowViewModel()
         {
             LogInCommand = new RelayCommand(OnRefreshLogInCommandExecute, CanRefreshLogInCommandExecute);
+            LogOutCommand = new RelayCommand(OnRefreshLogOutCommandExecute, CanRefreshLogOutCommandExecute);
+            ChangePasswordCommand = new RelayCommand(OnRefreshChangePasswordCommandExecute, CanRefreshChangePasswordCommandExecute);
         }
 
         private bool CanRefreshLogInCommandExecute() => true;
@@ -94,6 +97,39 @@ namespace TaskReports.ViewModel
 
         }
 
+        private bool CanRefreshLogOutCommandExecute() => true;
+
+        private void OnRefreshLogOutCommandExecute()
+        {
+            //string password = pboxUserPassword.SecurePassword;
+            CurrentUser.LogOut();
+
+            Password = "******";
+
+            OnPropertyChanged(nameof(UserName));
+            OnPropertyChanged(nameof(Password));
+            OnPropertyChanged(nameof(IsLoggedIn));
+            OnPropertyChanged(nameof(IsLoggedIn_Invert));
+            OnPropertyChanged(nameof(IsLoggedInColor));
+
+        }
+
+        private bool CanRefreshChangePasswordCommandExecute() => true;
+
+        private void OnRefreshChangePasswordCommandExecute()
+        {
+            //string password = pboxUserPassword.SecurePassword;
+            CurrentUser.TryChangePassword(Password);
+
+            Password = "******";
+
+            OnPropertyChanged(nameof(UserName));
+            OnPropertyChanged(nameof(Password));
+            OnPropertyChanged(nameof(IsLoggedIn));
+            OnPropertyChanged(nameof(IsLoggedIn_Invert));
+            OnPropertyChanged(nameof(IsLoggedInColor));
+
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
