@@ -11,11 +11,10 @@ using System.Windows.Input;
 
 using TaskReportLib.Entityes;
 
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight;
-
-
-
+using System.Windows;
+using System.Windows.Threading;
 
 namespace TaskReports.ViewModel
 {
@@ -43,34 +42,33 @@ namespace TaskReports.ViewModel
                     return _userName;
             }
             set => Set(ref _userName, value, "UserName");
-            //set => Set(ref _userName, value, true, "UserName");
-            // set => Set(ref _userName, value);
         }
 
-        private string _password;
+        private string _password = "******";
         public string Password
         {
             set => Set(ref _password, value);
             get => _password;
         }
 
-        private bool _isLoggedIn = CurrentUser.IsLoggedIn;
         public bool IsLoggedIn
         {
             get
             {
-                RaisePropertyChanged("IsLoggedIn");
+                //RaisePropertyChanged("IsLoggedIn");
                 return CurrentUser.IsLoggedIn;
             }
-            set => RaisePropertyChanged("IsLoggedIn");
-            //set => OnPropertyChanged(nameof(IsLoggedIn));
+           // set => RaisePropertyChanged("IsLoggedIn");
         }
 
-        public bool IsLoggedIn_Invert
+        public bool IsLoggedOut
         {
-            get => !CurrentUser.IsLoggedIn;
-            set => RaisePropertyChanged("IsLoggedIn_Invert");
-            //set => OnPropertyChanged(nameof(IsLoggedIn_Invert));
+            get
+            {
+                //RaisePropertyChanged("IsLoggedOut");
+                return !CurrentUser.IsLoggedIn;
+            }
+            //set => RaisePropertyChanged("IsLoggedOut");
         }
 
         public SolidColorBrush IsLoggedInColor
@@ -88,67 +86,36 @@ namespace TaskReports.ViewModel
 
         public MainWindowViewModel()
         {
-            //LogInCommand = new RelayCommand(OnRefreshLogInCommandExecute, CanRefreshLogInCommandExecute);
             LogInCommand = new RelayCommand(OnRefreshLogInCommandExecute, () => IsLoggedIn != true);
             LogOutCommand = new RelayCommand(OnRefreshLogOutCommandExecute, () => IsLoggedIn == true);
             ChangePasswordCommand = new RelayCommand(OnRefreshChangePasswordCommandExecute, () => IsLoggedIn == true);
         }
 
-        private bool CanRefreshLogInCommandExecute() => true; //=> !IsLoggedIn;
-
         private void OnRefreshLogInCommandExecute()
         {
-            //string password = pboxUserPassword.SecurePassword;
             CurrentUser.TryLogIn(UserName, Password);
 
             Password = "******";
 
-            RaisePropertyChanged("IsLoggedIn");
-            RaisePropertyChanged("IsLoggedInColor");
-
-            
-            
-
-            //OnPropertyChanged(nameof(UserName));
-            //OnPropertyChanged(nameof(Password));
-            //OnPropertyChanged(nameof(IsLoggedIn));
-            //OnPropertyChanged(nameof(IsLoggedIn_Invert));
-            
-
+            UpdateProperties();
         }
-
-        private bool CanRefreshLogOutCommandExecute() => true; 
 
         private void OnRefreshLogOutCommandExecute()
         {
-            //string password = pboxUserPassword.SecurePassword;
             CurrentUser.LogOut();
 
             Password = "******";
 
-            //OnPropertyChanged(nameof(UserName));
-            //OnPropertyChanged(nameof(Password));
-            //OnPropertyChanged(nameof(IsLoggedIn));
-            //OnPropertyChanged(nameof(IsLoggedIn_Invert));
-            //OnPropertyChanged(nameof(IsLoggedInColor));
-
+            UpdateProperties();
         }
-
-        private bool CanRefreshChangePasswordCommandExecute() => true; 
 
         private void OnRefreshChangePasswordCommandExecute()
         {
-            //string password = pboxUserPassword.SecurePassword;
-            CurrentUser.TryChangePassword(Password);
+            //CurrentUser.TryChangePassword(Password);
 
-            Password = "******";
+            //Password = "******";
 
-            //OnPropertyChanged(nameof(UserName));
-            //OnPropertyChanged(nameof(Password));
-            //OnPropertyChanged(nameof(IsLoggedIn));
-            //OnPropertyChanged(nameof(IsLoggedIn_Invert));
-            //OnPropertyChanged(nameof(IsLoggedInColor));
-
+            UpdateProperties();
         }
 
 
@@ -159,6 +126,12 @@ namespace TaskReports.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private void UpdateProperties()
+        {
+            RaisePropertyChanged("IsLoggedIn");
+            RaisePropertyChanged("IsLoggedOut");
+            RaisePropertyChanged("IsLoggedInColor");
+        }
 
     }
 }

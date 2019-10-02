@@ -198,11 +198,11 @@
                             <TextBlock Text="Данные пользователя" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5"/>
                             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                                 <TextBlock Text="Логин" Margin="5,2" MinWidth="50"/>
-                                <TextBox Margin="5,2" Text="{Binding UserName}" IsEnabled="{Binding IsLoggedIn_Invert}"/>
+                                <TextBox Margin="5,2" Text="{Binding UserName}" IsEnabled="{Binding IsLoggedOut}"/>
                             </DockPanel>
                             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                                 <TextBlock Text="Пароль" Margin="5,2" MinWidth="50"/>
-                                <TextBox  Margin="5,2" Text="{Binding Password}"/>
+                                <TextBox  Margin="5,2" Text="{Binding Password}" IsEnabled="{Binding IsLoggedOut}"/>
                             </DockPanel>
 
                             <TextBlock Text="Дополнительная информация" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5" TextWrapping="WrapWithOverflow"/>
