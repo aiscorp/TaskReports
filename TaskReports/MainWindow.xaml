@@ -8,11 +8,13 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
-        
+                
         xmlns:entityes="clr-namespace:TaskReportLib.Entityes;assembly=TaskReportLib"
         xmlns:data="clr-namespace:TaskReportLib.Data;assembly=TaskReportLib"
-        xmlns:local="clr-namespace:TaskReports"        
-        mc:Ignorable="d"
+        
+        xmlns:conv="clr-namespace:TaskReports.Converters"        
+        xmlns:local="clr-namespace:TaskReports"   mc:Ignorable="d"   
+        
         Title="{Binding MainWindowTitle}" Height="400" Width="600" MinHeight="320" MinWidth="400"
         DataContext="{Binding MainWindow, Source={StaticResource Locator}}">
     <Grid>
@@ -59,7 +61,7 @@
                                 <DataTemplate DataType="{x:Type entityes:Tag}">
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color}"/>
+                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color}" />
                                             <TextBlock Text="{Binding Name}" />
                                         </StackPanel>
                                         <TextBlock Text="{Binding Text}" FontStyle="Italic" Foreground="Gray" DockPanel.Dock="Bottom"  TextWrapping="WrapWithOverflow" />
@@ -190,7 +192,7 @@
                     <GroupBox Header="Учетная запись" Grid.Column="2" Margin="2,2">
                         <DockPanel>
                             <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" ItemWidth="100">
-                                <Button Content="Log In" Margin="5,2" Padding="10,5"  Command="{Binding LogInCommand}"/>
+                                <Button x:Name="btnLogIn" Content="Log In" Margin="5,2" Padding="10,5"  Command="{Binding LogInCommand}"/>
                                 <Button Content="Log Out" Margin="5,2" Padding="10,5" Command="{Binding LogOutCommand}"/>
                                 <Button Content="Change password" Margin="5,2" Padding="10,5" Command="{Binding ChangePasswordCommand}"/>
                             </WrapPanel>
@@ -198,11 +200,11 @@
                             <TextBlock Text="Данные пользователя" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5"/>
                             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                                 <TextBlock Text="Логин" Margin="5,2" MinWidth="50"/>
-                                <TextBox Margin="5,2" Text="{Binding UserName}" IsEnabled="{Binding IsLoggedOut}"/>
+                                <TextBox Margin="5,2" Text="{Binding UserName}" IsEnabled="{Binding ElementName=btnLogIn, Path=IsEnabled}" GotFocus="TextBox_GotFocus"/>
                             </DockPanel>
                             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                                 <TextBlock Text="Пароль" Margin="5,2" MinWidth="50"/>
-                                <TextBox  Margin="5,2" Text="{Binding Password}" IsEnabled="{Binding IsLoggedOut}"/>
+                                <TextBox  Margin="5,2" Text="{Binding Password}" IsEnabled="{Binding ElementName=btnLogIn, Path=IsEnabled}" GotKeyboardFocus="TextBox_GotFocus"/>
                             </DockPanel>
 
                             <TextBlock Text="Дополнительная информация" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5,5" TextWrapping="WrapWithOverflow"/>
@@ -222,7 +224,9 @@
                                 <TextBlock Text="HH:mm" Margin="5,2"/>
                             </WrapPanel>
 
+                           
 
+                            
 
 
 
@@ -259,7 +263,8 @@
             <Separator/>
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal" >
-                    <fa:ImageAwesome Height="20" Foreground="{Binding IsLoggedInColor}" Icon="User" DockPanel.Dock="Left" Margin="2, 2" />
+                    <fa:ImageAwesome Height="20" Foreground="{Binding LoggedInColor}" Icon="User" DockPanel.Dock="Left" Margin="2, 2" />
+                    <!--<fa:ImageAwesome Height="20" Foreground="{Binding IsLoggedIn, Converter={ StaticResource conv:BoolToColorConverter}}" Icon="User" DockPanel.Dock="Left" Margin="2, 2" />-->
                     <TextBlock Text="{Binding UserName}" Margin="5, 2" VerticalAlignment="Center"/>
                 </StackPanel>
             </StatusBarItem>
