@@ -29,5 +29,12 @@ namespace TaskReports
         {
 
         }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = e.OriginalSource as TextBox;
+            if (textBox != null)
+                textBox.SelectAll();
+        }
     }
 }

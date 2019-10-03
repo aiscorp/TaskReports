@@ -50,6 +50,11 @@ namespace TaskReports.ViewModel
             get => CurrentUser.IsLoggedIn ? "Подключен" : "Не подключен";
         }
 
+        public string LoggedInColor
+        {
+            get => IsLoggedIn ? "Green" : "Gray";
+        }
+        
         public bool IsLoggedIn
         {
             get => CurrentUser.IsLoggedIn;
@@ -60,10 +65,8 @@ namespace TaskReports.ViewModel
             get => !CurrentUser.IsLoggedIn;
         }
 
-        public SolidColorBrush IsLoggedInColor
-        {
-            get => new SolidColorBrush(IsLoggedIn ? Colors.Green : Colors.Gray);
-        }
+        public int TestValue = 10;
+        
 
         public ICommand LogInCommand { get; private set; }
         public ICommand LogOutCommand { get; private set; }
