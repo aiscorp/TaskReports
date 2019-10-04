@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace TaskReports.Converters
 {
-    public class BoolToColorConverter : IValueConverter
+    public class BoolToColorConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -19,6 +20,9 @@ namespace TaskReports.Converters
         {
             return System.Windows.DependencyProperty.UnsetValue;
         }
+
+        public override object ProvideValue(IServiceProvider serviceProvider) => this;
+
     }
 
     public class IntToStringConverter : IValueConverter, IMultiValueConverter

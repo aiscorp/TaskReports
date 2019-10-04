@@ -17,6 +17,9 @@
         
         Title="{Binding MainWindowTitle}" Height="400" Width="600" MinHeight="320" MinWidth="400"
         DataContext="{Binding MainWindow, Source={StaticResource Locator}}">
+    <Window.Resources>
+        <conv:BoolToColorConverter x:Key="ColorConverter"/>
+    </Window.Resources>
     <Grid>
 
         <TabControl Margin="0,0,0,30" MinHeight="100" MinWidth="200">
@@ -264,7 +267,8 @@
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal" >
                     <fa:ImageAwesome Height="20" Foreground="{Binding LoggedInColor}" Icon="User" DockPanel.Dock="Left" Margin="2, 2" />
-                    <!--<fa:ImageAwesome Height="20" Foreground="{Binding IsLoggedIn, Converter={ StaticResource conv:BoolToColorConverter}}" Icon="User" DockPanel.Dock="Left" Margin="2, 2" />-->
+                    <fa:ImageAwesome Height="20" Foreground="{Binding IsLoggedIn, Converter={ StaticResource ColorConverter}}" Icon="User" DockPanel.Dock="Left" Margin="2, 2" />
+                    <fa:ImageAwesome Height="20" Foreground="{Binding IsLoggedIn, Converter={conv:BoolToColorConverter}}" Icon="User" DockPanel.Dock="Left" Margin="2, 2" />
                     <TextBlock Text="{Binding UserName}" Margin="5, 2" VerticalAlignment="Center"/>
                 </StackPanel>
             </StatusBarItem>
