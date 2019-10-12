@@ -15,15 +15,27 @@ namespace TaskReportsThreading
         static void Main(string[] args)
         {
             // При работе с матрицей будем выводить результат в файл
-            StreamWriter outputFile = new StreamWriter("log.txt");
+            // доработать
+            // StreamWriter outputFile = new StreamWriter("log.txt");
 
+            // ТЕСТ с матрицей 3*3
 
+            int[,] matrixA = new int[3, 3] { { 1, 2, 3 }, { 1, 2, 3 }, { 1, 2, 3 } };
+            int[,] matrixB = new int[3, 3] { { 1, 2, 3 }, { 1, 2, 3 }, { 1, 2, 3 } };
 
-            MatrixMux matrixMux = new MatrixMux();
+            MatrixMux matrixMux = new MatrixMux(3);
+            int[,] matrixC = matrixMux.ParallelMatrixMux(matrixA, matrixB);
 
+            Console.WriteLine("3 элементов требует на параллельные вычисления:" + matrixMux.timeSpan.TotalMilliseconds + "ms");
+            matrixMux.Print(matrixC);
 
-            //int[,] matrixC = matrixMux.ParallelMatrixMux();
+            // ТЕСТ
+            // 1000 элементов
+            matrixMux = new MatrixMux(1000);
+            // конструктор по умолчанию использует матрицы со случайными числами
+            matrixC = matrixMux.ParallelMatrixMux();
 
+            Console.WriteLine("1000 Элементов требует на параллельные вычисления:" + matrixMux.timeSpan.TotalMilliseconds + "ms");
 
 
             Console.ReadKey();
@@ -33,7 +45,7 @@ namespace TaskReportsThreading
         }
 
 
-        
+
 
 
 
