@@ -108,6 +108,30 @@ namespace TaskReportsThreading
             //    };
             //});
 
+            //  Вариант 4 - для матриц 1000*1000 - 2616мс
+            // Транспонирование матрицы для использования кэш возможностей процессора
+            int[,] matrixTB = new int[matrixLength, matrixLength];
+
+            for (int i = 0; i < matrixLength; i++)
+            {
+                for (int j = 0; j < matrixLength; j++)
+                {
+                    matrixTB[i, j] = matrixB[j, i];
+                }
+            }
+
+            Parallel.For(0, matrixLength, raw =>
+            {
+                for (int column = 0; column < matrixLength; column++)
+                {
+                    int temp = 0;
+
+                    for (int j = 0; j < matrixLength; j++)
+                        temp += matrixA[raw, j] * matrixTB[column, j];
+
+                    matrixC[raw, column] = temp;
+                };
+            });
 
 
             Span = DateTime.Now - _startTS;
