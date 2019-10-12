@@ -12,9 +12,9 @@ namespace TaskReportsThreading
     {
 
         //Замеры времени, не реализовано пока
-        public TimeSpan timeSpan { get; private set; }
-        DateTime _startTS;
-        DateTime _endTS;
+        public TimeSpan Span { get; private set; }
+        private DateTime _startTS;
+        private DateTime _endTS;
 
         // Матрицы        
         int[,] matrixA;
@@ -64,22 +64,53 @@ namespace TaskReportsThreading
         }
 
         // общий метод с запросом матриц
-            public int[,] ParallelMatrixMux(int[,] matrixA, int[,] matrixB)
+        public int[,] ParallelMatrixMux(int[,] matrixA, int[,] matrixB)
         {
             _startTS = DateTime.Now;
 
-            // Умножение матриц тремя вложенными циклами, 2 верхних цикла работают параллельно
-            Parallel.For(0, matrixLength, raw =>
-            {
-                //Parallel.For(0, matrixLength, column => Multiply(matrixC, column, raw, matrixLength));
-                Parallel.For(0, matrixLength, column =>
-                {
-                    for (int j = 0; j < matrixLength; j++)
-                        matrixC[raw, column] += matrixA[raw, j] * matrixB[j, column];
-                });
-            });
+            // Под конец попалась ссылка с docs.microsoft.com, вариант 3 подглядел там
+            // https://docs.microsoft.com/ru-ru/dotnet/standard/parallel-programming/how-to-write-a-simple-parallel-for-loop
 
-            timeSpan = DateTime.Now - _startTS;
+            // Первоначальный вариант, Вариант 1 - для матриц 1000*1000 - 5909мс
+            //// Умножение матриц тремя вложенными циклами, 2 верхних цикла работают параллельно
+            //Parallel.For(0, matrixLength, raw =>
+            //{
+            //    Parallel.For(0, matrixLength, column =>
+            //    {
+            //        for (int j = 0; j < matrixLength; j++)
+            //            matrixC[raw, column] += matrixA[raw, j] * matrixB[j, column];
+            //    });
+            //});
+
+            // Вариант 2 - для матриц 1000*1000 - 5241мс
+            // Умножение матриц тремя вложенными циклами, 1 цикл работает параллельно
+            //Parallel.For(0, matrixLength, raw =>
+            //{
+            //    for(int column = 0; column < matrixLength; column++)
+            //    {
+            //        for (int j = 0; j < matrixLength; j++)
+            //            matrixC[raw, column] += matrixA[raw, j] * matrixB[j, column];
+            //    };
+            //});
+
+            //  Вариант 3 - для матриц 1000*1000 - 3945мс
+            // Запись в массив С через временную переменную
+            //Parallel.For(0, matrixLength, raw =>
+            //{
+            //    for (int column = 0; column < matrixLength; column++)
+            //    {
+            //        int temp = 0;
+
+            //        for (int j = 0; j < matrixLength; j++)
+            //            temp += matrixA[raw, j] * matrixB[j, column];
+
+            //        matrixC[raw, column] = temp;
+            //    };
+            //});
+
+
+
+            Span = DateTime.Now - _startTS;
 
             return matrixC;
         }
