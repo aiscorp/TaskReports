@@ -38,6 +38,53 @@ namespace TaskReportsThreading
             InitMatrix(matrixLength);
         }
 
+
+        public static void Lesson6()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Урок №6, Умножение матриц, матрицы заполнены случайными числами\n");
+            Console.WriteLine("Задание: Даны 2 двумерных матрицы. Размерность 100х100, 500х500 и 1000х1000 каждая. Напишите приложение, производящее параллельное умножение матриц. Матрицы заполняются случайными целыми числами от 0 до 255.\n");
+            Console.ResetColor();
+
+            // ----------------------
+            // Тест умножения матриц 3х3 = 1,2,3, результат 6,12,18
+            Console.WriteLine("Вычисление тестовой матрицы 3х3 для проверки корректности счета:");
+            int[,] matrixA = new int[3, 3] { { 1, 2, 3 }, { 1, 2, 3 }, { 1, 2, 3 } };
+            int[,] matrixB = new int[3, 3] { { 1, 2, 3 }, { 1, 2, 3 }, { 1, 2, 3 } };
+
+            MatrixMux matrixMux = new MatrixMux(3);
+            int[,] matrixC = matrixMux.ParallelMatrixMux(matrixA, matrixB);
+
+            matrixMux.Print(matrixC);
+
+            Console.WriteLine("3 элементов требует на параллельные вычисления:" + matrixMux.Span.TotalMilliseconds + "ms\n");
+                       
+            // ТЕСТ
+            // 100 элементов
+            matrixMux = new MatrixMux(100);
+            // конструктор по умолчанию использует матрицы со случайными числами
+            matrixC = matrixMux.ParallelMatrixMux();
+
+            Console.WriteLine("100 Элементов требует на параллельные вычисления:" + matrixMux.Span.TotalMilliseconds + "ms\n");
+
+            // 500 элементов
+            matrixMux = new MatrixMux(500);
+            // конструктор по умолчанию использует матрицы со случайными числами
+            matrixC = matrixMux.ParallelMatrixMux();
+
+            Console.WriteLine("500 Элементов требует на параллельные вычисления:" + matrixMux.Span.TotalMilliseconds + "ms\n");
+
+            // 1000 элементов
+            matrixMux = new MatrixMux(1000);
+            // конструктор по умолчанию использует матрицы со случайными числами
+            matrixC = matrixMux.ParallelMatrixMux();
+
+            Console.WriteLine("1000 Элементов требует на параллельные вычисления:" + matrixMux.Span.TotalMilliseconds + "ms\n");
+
+            Console.ReadKey();
+        }
+
         private void InitMatrix(int length)
         {
 
@@ -70,6 +117,7 @@ namespace TaskReportsThreading
 
             // Под конец попалась ссылка с docs.microsoft.com, вариант 3 подглядел там
             // https://docs.microsoft.com/ru-ru/dotnet/standard/parallel-programming/how-to-write-a-simple-parallel-for-loop
+            // Вариант 4 - на ХАБРе
 
             // Первоначальный вариант, Вариант 1 - для матриц 1000*1000 - 5909мс
             //// Умножение матриц тремя вложенными циклами, 2 верхних цикла работают параллельно
@@ -108,8 +156,9 @@ namespace TaskReportsThreading
             //    };
             //});
 
-            //  Вариант 4 - для матриц 1000*1000 - 2616мс
+            //  Вариант 4 - итог - для матриц 1000*1000 - 2616мс
             // Транспонирование матрицы для использования кэш возможностей процессора
+            // 
             int[,] matrixTB = new int[matrixLength, matrixLength];
 
             for (int i = 0; i < matrixLength; i++)
