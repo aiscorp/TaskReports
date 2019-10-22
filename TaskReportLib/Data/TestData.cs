@@ -28,11 +28,11 @@ namespace TaskReportLib.Data
             new Project{Id=6, Name = "Проект 6", Text="Описание проекта 6", Color= new SolidColorBrush(Colors.Black)}
         };
 
-        public static List<Task> Tasks { get; } = new List<Task>
+        public static List<Job> Tasks { get; } = new List<Job>
         {
-            new Task { Id = 1, Name = "Задача 1", Text = "Описание задачи", Project = Projects[0], Tag = Tags[0] },
-            new Task { Id = 2, Name = "Задача 2", Text = "Описание задачи", Project = Projects[1], Tag = Tags[2] },
-            new Task { Id = 3, Name = "Задача 3", Text = "Описание задачи", Project = Projects[0], Tag = Tags[3] }
+            new Job { Id = 1, Name = "Задача 1", Description = "Описание задачи", Project = Projects[0], Tag = Tags[0] },
+            new Job { Id = 2, Name = "Задача 2", Description = "Описание задачи", Project = Projects[1], Tag = Tags[2] },
+            new Job { Id = 3, Name = "Задача 3", Description = "Описание задачи", Project = Projects[0], Tag = Tags[3] }
         };
 
         static TestData()
