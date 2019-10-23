@@ -19,6 +19,7 @@
         DataContext="{Binding MainWindow, Source={StaticResource Locator}}">
     <Window.Resources>
         <conv:BoolToColorConverter x:Key="ColorConverter"/>
+        <conv:RgbToColorConverter x:Key="RGBConverter"/>
     </Window.Resources>
     <Grid>
 
@@ -47,7 +48,7 @@
                                 <DataTemplate DataType="{x:Type entityes:Tag}">
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color}"/>
+                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color, Converter={conv:RgbToColorConverter}}"/>
                                             <TextBlock Text="{Binding Name}" />
                                         </StackPanel>
                                         <TextBlock Text="{Binding Text}" FontStyle="Italic" Foreground="Gray" DockPanel.Dock="Bottom"  TextWrapping="WrapWithOverflow" />
@@ -64,7 +65,7 @@
                                 <DataTemplate DataType="{x:Type entityes:Tag}">
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color}" />
+                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color, Converter={conv:RgbToColorConverter}}" />
                                             <TextBlock Text="{Binding Name}" />
                                         </StackPanel>
                                         <TextBlock Text="{Binding Text}" FontStyle="Italic" Foreground="Gray" DockPanel.Dock="Bottom"  TextWrapping="WrapWithOverflow" />
@@ -139,7 +140,7 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="7" AutoGenerateColumns="False" DataContext="{x:Static data:TestData.Tasks}">
+                    <DataGrid Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="7" AutoGenerateColumns="False" DataContext="{x:Static data:TestData.Projects}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" MinWidth="20"/>
                             <DataGridTextColumn Header="Категория" MinWidth="100"/>

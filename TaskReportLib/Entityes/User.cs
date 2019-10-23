@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Windows.Media;
 
 namespace TaskReportLib.Entityes
 {
@@ -14,8 +17,8 @@ namespace TaskReportLib.Entityes
         // ------
         private string userName;
         private string passwordHash;
-        // ------
-        public int Id { get; private set; }
+        // ------        
+        public int Id { get; set; }
         public string UserName
         {
             set
@@ -36,12 +39,12 @@ namespace TaskReportLib.Entityes
             }
             get => passwordHash;
         }
-        public DateTime LastLogin { get; set; }
-        public DateTime DaySpan { get; set; }
-        public DateTime WeekSpan { get; set; }
-        public DateTime MonthSpan { get; set; }
-        public DateTime YearSpan { get; set; }
-        public virtual ICollection<Job> Jobs { get; set; }
+        [Column(TypeName = "datetime2")] public DateTime LastLogin { get; set; }
+        [Column(TypeName = "datetime2")] public DateTime DaySpan { get; set; }
+        [Column(TypeName = "datetime2")] public DateTime WeekSpan { get; set; }
+        [Column(TypeName = "datetime2")] public DateTime MonthSpan { get; set; }
+        [Column(TypeName = "datetime2")] public DateTime YearSpan { get; set; }
+        [Column(TypeName = "datetime2")] public virtual ICollection<Job> Jobs { get; set; }
         // ------
         public User(string username, string password)
         {
@@ -52,7 +55,7 @@ namespace TaskReportLib.Entityes
             }
         }
         public User() { }
-
+        // ------
         public bool CheckAutotification(string password)
         {
             if (!string.IsNullOrEmpty(password) && GetMd5Hash(password) == passwordHash)
