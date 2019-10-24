@@ -12,13 +12,13 @@ using System.Windows.Media;
 
 namespace TaskReportLib.Entityes
 {
-    public class User
+    public class User : BaseEntity
     {
         // ------
         private string userName;
         private string passwordHash;
         // ------        
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string UserName
         {
             set
@@ -44,7 +44,7 @@ namespace TaskReportLib.Entityes
         [Column(TypeName = "datetime2")] public DateTime WeekSpan { get; set; }
         [Column(TypeName = "datetime2")] public DateTime MonthSpan { get; set; }
         [Column(TypeName = "datetime2")] public DateTime YearSpan { get; set; }
-        [Column(TypeName = "datetime2")] public virtual ICollection<Job> Jobs { get; set; }
+        public virtual ICollection<Job> Jobs { get; set; }
         // ------
         public User(string username, string password)
         {

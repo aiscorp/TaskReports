@@ -9,6 +9,6 @@ namespace TaskReportLib.Services.Interfaces
         int Create(T item);
         void Edit(int id, T item);
         bool Remove(int id);
-        void SaveChanges();
+        //void SaveChanges();
     }
 }

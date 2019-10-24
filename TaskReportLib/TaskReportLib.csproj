@@ -58,9 +58,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\DataContext.cs" />
+    <Compile Include="Data\TaskReportsDb.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Data\TestData.cs" />
+    <Compile Include="Entityes\BaseEntity.cs" />
     <Compile Include="Entityes\CurrentUser.cs" />
     <Compile Include="Entityes\Project.cs" />
     <Compile Include="Entityes\DataServer.cs" />
@@ -68,6 +69,12 @@
     <Compile Include="Entityes\Job.cs" />
     <Compile Include="Entityes\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EF\DataContextProvider.cs" />
+    <Compile Include="Services\EF\EFDataProvider.cs" />
+    <Compile Include="Services\EF\EFJobsDataProvider.cs" />
+    <Compile Include="Services\EF\EFProjectsDataProvider.cs" />
+    <Compile Include="Services\EF\EFTagsDataProvider.cs" />
+    <Compile Include="Services\EF\EFUsersDataProvider.cs" />
     <Compile Include="Services\Interfaces\IJobsDataProvider.cs" />
     <Compile Include="Services\Interfaces\IProjectsDataProvider.cs" />
     <Compile Include="Services\Interfaces\ITagsDataProvider.cs" />
@@ -82,7 +89,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\EF\" />
     <Folder Include="Services\InMemory\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,9 +9,9 @@ using System.Windows.Media;
 
 namespace TaskReportLib.Entityes
 {
-    public class Tag
+    public class Tag : BaseEntity
     {
-        public int Id { get; set; }
+        // public int Id { get; set; }
         public string Name { get; set; }
         public string Text { get; set; }
 

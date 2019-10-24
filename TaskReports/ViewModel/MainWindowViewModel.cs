@@ -79,7 +79,7 @@ namespace TaskReports.ViewModel
             LogOutCommand = new RelayCommand(OnRefreshLogOutCommandExecute, () => IsLoggedIn == true);
             ChangePasswordCommand = new RelayCommand(OnRefreshChangePasswordCommandExecute, () => IsLoggedIn == true);
 
-            using (DataContext context = new DataContext())
+            using (TaskReportsDb context = new TaskReportsDb())
             {
                 
 

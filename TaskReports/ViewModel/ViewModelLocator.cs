@@ -52,7 +52,7 @@ namespace TaskReports.ViewModel
             
             services
                 //.TryRegister<IRecipientsDataProvider, DataContext>()
-                .TryRegister(() => new DataContext());
+                .TryRegister(() => new TaskReportsDb());
 
             //services
             //   .TryRegister<IRecipientsDataProvider, InMemoryRecipientsDataProvider>()

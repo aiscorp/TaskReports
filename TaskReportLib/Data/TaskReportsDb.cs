@@ -8,15 +8,15 @@ using TaskReportLib.Entityes;
 
 namespace TaskReportLib.Data
 {
-    public class DataContext : DbContext
+    public class TaskReportsDb : DbContext
     {
         // Разрешение миграций и обновление
         // enable-migrations // add-migration Name  // update-database
 
         // Автоматические миграции
         // Enable-Migrations -StartUpProjectName TaskReportLib -MigrationsDirectory Data\Migrations -Verbose
-        static DataContext() =>
-    Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataContext, Migrations.Configuration>());
+        static TaskReportsDb() =>
+    Database.SetInitializer(new MigrateDatabaseToLatestVersion<TaskReportsDb, Migrations.Configuration>());
 
         // -----
         public DbSet<User> Users { get; set; }
@@ -24,7 +24,7 @@ namespace TaskReportLib.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Project> Projects { get; set; }
         // -----
-        public DataContext() : base("DbConnection") { }
-        public DataContext(string connection) : base(connection) { }
+        public TaskReportsDb() : base("DbConnection") { }
+        public TaskReportsDb(string connection) : base(connection) { }
     }
 }
