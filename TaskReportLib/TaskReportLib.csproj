@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DataContext.cs" />
+    <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Data\TestData.cs" />
     <Compile Include="Entityes\CurrentUser.cs" />
     <Compile Include="Entityes\Project.cs" />
@@ -67,6 +68,11 @@
     <Compile Include="Entityes\Job.cs" />
     <Compile Include="Entityes\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Interfaces\IJobsDataProvider.cs" />
+    <Compile Include="Services\Interfaces\IProjectsDataProvider.cs" />
+    <Compile Include="Services\Interfaces\ITagsDataProvider.cs" />
+    <Compile Include="Services\Interfaces\IUsersDataProvider.cs" />
+    <Compile Include="Services\Interfaces\IDataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Library.ico" />
@@ -74,6 +80,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\EF\" />
+    <Folder Include="Services\InMemory\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

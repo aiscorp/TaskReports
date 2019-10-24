@@ -15,6 +15,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
+using TaskReportLib.Data;
 
 namespace TaskReports.ViewModel
 {
@@ -47,6 +48,16 @@ namespace TaskReports.ViewModel
             //SimpleIoc.Default.Register<MainViewModel>();
 
             services.Register<MainWindowViewModel>();
+
+            
+            services
+                //.TryRegister<IRecipientsDataProvider, DataContext>()
+                .TryRegister(() => new DataContext());
+
+            //services
+            //   .TryRegister<IRecipientsDataProvider, InMemoryRecipientsDataProvider>()
+            //   .TryRegister<ISendersDataProvider, InMemorySendersDataProvider>()
+            //   .TryRegister<IServersDataProvider, InMemoryServersDataProvider>();
 
         }
 

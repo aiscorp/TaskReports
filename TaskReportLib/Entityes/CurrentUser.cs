@@ -20,7 +20,7 @@ namespace TaskReportLib.Entityes
         {
             // Загрузка последнего залогинившегося пользователя будет организована позднее
             // на данный момент костыль root, root1234
-            currentUser = new User("root", "root1234");
+            currentUser = new User("root", "aabb2100033f0352fe7458e412495148");
             IsLoggedIn = false;
         }
 

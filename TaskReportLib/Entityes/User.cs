@@ -31,12 +31,12 @@ namespace TaskReportLib.Entityes
         }
         public string PasswordHash
         {
-            set
-            {
-                Regex rg = new Regex(@"^[\w-]{6,16}$"); // Латинские буквы, цифры, дефисы и подчёркивания, от 6 до 16 символов
-                if (!string.IsNullOrEmpty(value) && rg.IsMatch(value))
-                    passwordHash = GetMd5Hash(value);
-            }
+            set => passwordHash = value;
+            //{
+            //    Regex rg = new Regex(@"^[\w-]{6,16}$"); // Латинские буквы, цифры, дефисы и подчёркивания, от 6 до 16 символов
+            //    if (!string.IsNullOrEmpty(value) && rg.IsMatch(value))
+            //        passwordHash = GetMd5Hash(value);
+            //}
             get => passwordHash;
         }
         [Column(TypeName = "datetime2")] public DateTime LastLogin { get; set; }
