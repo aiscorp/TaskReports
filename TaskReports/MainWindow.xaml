@@ -19,7 +19,7 @@
         DataContext="{Binding MainWindow, Source={StaticResource Locator}}">
     <Window.Resources>
         <conv:BoolToColorConverter x:Key="ColorConverter"/>
-        <conv:RgbToColorConverter x:Key="RGBConverter"/>
+        <conv:RgbToColorConverter x:Key="RGBConverter"/>        
     </Window.Resources>
     <Grid>
 
@@ -43,7 +43,7 @@
 
                     <DockPanel Grid.Row="0" Grid.Column="0">
                         <Label Content="Категории" MinWidth="100" VerticalAlignment="Center"/>
-                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{x:Static data:TestData.Tags}" SelectedIndex="0" MinHeight="20" MaxHeight="40">
+                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{Binding Path=TagsView}"  SelectedValue="{Binding TagsView[0]}" MinHeight="20" MaxHeight="40">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type entityes:Tag}">
                                     <StackPanel>
@@ -60,7 +60,7 @@
 
                     <DockPanel Grid.Row="1" Grid.Column="0" MinHeight="30">
                         <Label Content="Проект" MinWidth="100" VerticalAlignment="Center"/>
-                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{x:Static data:TestData.Projects}" SelectedIndex="0" MinHeight="20" MaxHeight="40">
+                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{x:Static data:DataInMemory.Projects}" SelectedIndex="0" MinHeight="20" MaxHeight="40">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type entityes:Tag}">
                                     <StackPanel>
@@ -140,7 +140,7 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="7" AutoGenerateColumns="False" DataContext="{x:Static data:TestData.Projects}">
+                    <DataGrid Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="7" AutoGenerateColumns="False" DataContext="{x:Static data:DataInMemory.Projects}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" MinWidth="20"/>
                             <DataGridTextColumn Header="Категория" MinWidth="100"/>

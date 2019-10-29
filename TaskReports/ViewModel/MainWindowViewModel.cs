@@ -16,11 +16,20 @@ using GalaSoft.MvvmLight;
 using System.Windows;
 using System.Windows.Threading;
 using TaskReportLib.Data;
+using TaskReportLib.Services.EF;
+using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace TaskReports.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+
+        public List<Tag> TagsView 
+        {
+            get => DataInMemory.Tags;
+
+        }
 
         private string mainWindowTitle = "Task Reprots v0.01b";
         public string MainWindowTitle
@@ -79,49 +88,69 @@ namespace TaskReports.ViewModel
             LogOutCommand = new RelayCommand(OnRefreshLogOutCommandExecute, () => IsLoggedIn == true);
             ChangePasswordCommand = new RelayCommand(OnRefreshChangePasswordCommandExecute, () => IsLoggedIn == true);
 
-            using (TaskReportsDb context = new TaskReportsDb())
-            {
-                
+          
 
-                List<User> users = new List<User>
-                {
-                    new User{Id=1, UserName = "root", PasswordHash = "aabb2100033f0352fe7458e412495148", LastLogin = DateTime.Parse("2019-10-22 15:49:22.000")},
-                    new User{Id=2, UserName = "aisc", PasswordHash = "ff4d41e1e980dd9e2697e74084d10a97", LastLogin = DateTime.Parse("2019-10-22 15:49:22.000")},
-                    new User{Id=3, UserName = "sunbro"}
-                };
+            //Parallel.Invoke(() =>
+            //{
+            //    Thread.Sleep(5000);
 
-                List<Project> projects = new List<Project>
-                {
-                    new Project{Id=1, Name = "Без проекта", Text="Если проект не требуется", Color="#aaaaaa", User = users[1]},
-                    new Project{Id=2, Name = "Проект 2", Text="Описание проекта 2", Color="#0000ff", User = users[2]},
-                    new Project{Id=3, Name = "Проект 3", Text="Описание проекта 3", Color="#00ff00", User = users[1]},
-                    new Project{Id=4, Name = "Проект 4", Text="Описание проекта 4", Color="#ff0000", User = users[2]},
-                    new Project{Id=5, Name = "Проект 5", Text="Описание проекта 5", Color="#0000ff", User = users[1]},
-                    new Project{Id=6, Name = "Проект 6", Text="Описание проекта 6", Color="#ff0000", User = users[2]}
-                };
+            //});
 
-                List<Tag> tags = new List<Tag>
-                {
-                    new Tag{Id=1, Name = "Работа №1", Text="Основные задачи в рабочее время", Color="#ff0000", User = users[1]},
-                    new Tag{Id=2, Name = "Работа №2", Text="Основные задачи в рабочее время", Color="#00ff00", User = users[2]},
-                    new Tag{Id=3, Name = "Обучение", Text="Обучение программированию и не только", Color="#0000ff", User = users[1]},
-                    new Tag{Id=4, Name = "Отдых", Text="Перерывы на отдых, развлечения или что-то другое", Color="#aaaaaa", User = users[1]}
-                };
+            //var tasks = new List<Thread>();
+            //tasks.Add(new Thread(() =>
+            //{
+            //    //lock (lockObject)
+            //    //{
 
-                List<Job> jobs = new List<Job>
-                {
-                    new Job { Id = 1, Name = "Задача 1", Description = "Описание задачи" },
-                    new Job { Id = 2, Name = "Задача 2", Description = "Описание задачи" },
-                    new Job { Id = 3, Name = "Задача 3", Description = "Описание задачи" }
-                };
+            //    //}
+            //}));
 
-                
-               // context.Users.AddRange(users);
-               // context.Projects.AddRange(projects);
-               // context.Tags.AddRange(tags);
-               // context.Jobs.AddRange(jobs);
-               // context.SaveChanges();
-            }
+
+            //using (TaskReportsDb context = new TaskReportsDb())
+            //{
+
+            //    List<User> users = new List<User>
+            //    {
+            //        new User{UserName = "root", PasswordHash = "aabb2100033f0352fe7458e412495148", LastLogin = DateTime.Parse("2019-10-22 15:49:22.000")},
+            //        new User{UserName = "aisc", PasswordHash = "ff4d41e1e980dd9e2697e74084d10a97", LastLogin = DateTime.Parse("2019-10-22 15:49:22.000")},
+            //        new User{UserName = "sunbro"}
+            //    };
+
+            //    List<Project> projects = new List<Project>
+            //    {
+            //        new Project{Name = "Без проекта", Text="Если проект не требуется", Color="#aaaaaa", User = users[1]},
+            //        new Project{Name = "Проект 2", Text="Описание проекта 2", Color="#0000ff", User = users[2]},
+            //        new Project{Name = "Проект 3", Text="Описание проекта 3", Color="#00ff00", User = users[1]},
+            //        new Project{Name = "Проект 4", Text="Описание проекта 4", Color="#ff0000", User = users[2]},
+            //        new Project{Name = "Проект 5", Text="Описание проекта 5", Color="#0000ff", User = users[1]},
+            //        new Project{Name = "Проект 6", Text="Описание проекта 6", Color="#ff0000", User = users[2]}
+            //    };
+
+            //    List<Tag> tags = new List<Tag>
+            //    {
+            //        new Tag{Name = "Работа №1", Text="Основные задачи в рабочее время", Color="#ff0000", User = users[1]},
+            //        new Tag{Name = "Работа №2", Text="Основные задачи в рабочее время", Color="#00ff00", User = users[2]},
+            //        new Tag{Name = "Обучение", Text="Обучение программированию и не только", Color="#0000ff", User = users[1]},
+            //        new Tag{Name = "Обучение", Text="Обучение программированию и не только", Color="#0000ff", User = users[2]},
+            //        new Tag{Name = "Отдых", Text="Перерывы на отдых, развлечения или что-то другое", Color="#aaaaaa", User = users[1]}
+            //    };
+
+            //    List<Job> jobs = new List<Job>
+            //    {
+            //        new Job { Name = "Задача 1", Description = "Описание задачи", User = users[1] },
+            //        new Job { Name = "Задача 2", Description = "Описание задачи", User = users[1] },
+            //        new Job { Name = "Задача 1", Description = "Описание задачи", User = users[2] },
+            //        new Job { Name = "Задача 2", Description = "Описание задачи", User = users[2] },
+            //        new Job { Name = "Задача 3", Description = "Описание задачи", User = users[1] }
+            //    };
+
+
+            //    context.Users.AddRange(users);
+            //    context.Projects.AddRange(projects);
+            //    context.Tags.AddRange(tags);
+            //    context.Jobs.AddRange(jobs);
+            //    context.SaveChanges();
+            //}
 
 
         }
@@ -131,6 +160,25 @@ namespace TaskReports.ViewModel
             CurrentUser.TryLogIn(UserName, Password);
 
             //Password = "******";
+
+            var tasks = new Thread(() =>         
+            {
+                var usersDP = new EFUsersDataProvider(new DataContextProvider());
+                var user = usersDP.TryFindUserByName("sunbro");
+                if (user != null)
+                    user = usersDP.GetUserAllById(user.Id);
+
+                DataInMemory.Tags = user.Tags.ToList();
+                DataInMemory.Projects = user.Projects.ToList();
+                RaisePropertyChanged("TagsView");
+                RaisePropertyChanged("data:DataInMemory.Projects");
+                RaisePropertyChanged("DataInMemory.Projects");
+                RaisePropertyChanged("Projects");
+
+            });
+
+            tasks.Start();
+
 
             UpdateProperties();
         }

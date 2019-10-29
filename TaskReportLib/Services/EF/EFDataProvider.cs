@@ -51,7 +51,6 @@ namespace TaskReportLib.Services.EF
                 if (db_item is null) return false;
                 db.Set<T>().Remove(db_item);
                 db.SaveChanges();
-                //SaveChanges();
                 return true;
             }
         }
@@ -72,7 +71,5 @@ namespace TaskReportLib.Services.EF
                 db.SaveChanges();
             }
         }
-        // Этот метод видимо будет исключен в будущем
-        //public void SaveChanges() { }
     }
 }

@@ -9,6 +9,5 @@ namespace TaskReportLib.Services.EF
     public class EFProjectsDataProvider : EFDataProvider<Tag>, ITagsDataProvider    
     {
         public EFProjectsDataProvider(DataContextProvider db) : base(db) { }
-
     }
 }

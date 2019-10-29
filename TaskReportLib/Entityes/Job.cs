@@ -9,18 +9,14 @@ using System.Windows.Media;
 
 namespace TaskReportLib.Entityes
 {
-    public class Job
+    public class Job : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         // -----
         public string Name { get; set; }
         public string Description { get; set; }
         // -----
-        //public virtual User User { get; set; }
-        //public virtual Tag Tag { get; set; }
-        //public virtual Project Project { get; set; }
-        //public virtual Project SubProject { get; set; }
+        // Связь
+        public virtual User User { get; set; }        
         // -----
         [Column(TypeName = "datetime2")] public DateTime StartTime { get; set; }
         [Column(TypeName = "datetime2")] public DateTime EndTime { get; set; }

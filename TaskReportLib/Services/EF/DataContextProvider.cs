@@ -9,7 +9,9 @@ namespace TaskReportLib.Services.EF
 {
     public class DataContextProvider
     {
-        public string ConnectionString { get; set; } = "name=TaskReports";
+
+        public string ConnectionString { get; set; } = "name=DbConnection";
+
         public TaskReportsDb CreateContext() => new TaskReportsDb(ConnectionString);
     }
 }

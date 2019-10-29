@@ -44,7 +44,11 @@ namespace TaskReportLib.Entityes
         [Column(TypeName = "datetime2")] public DateTime WeekSpan { get; set; }
         [Column(TypeName = "datetime2")] public DateTime MonthSpan { get; set; }
         [Column(TypeName = "datetime2")] public DateTime YearSpan { get; set; }
+        // ------       
+        // Связи
         public virtual ICollection<Job> Jobs { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
         // ------
         public User(string username, string password)
         {

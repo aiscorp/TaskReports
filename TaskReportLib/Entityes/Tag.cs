@@ -11,13 +11,11 @@ namespace TaskReportLib.Entityes
 {
     public class Tag : BaseEntity
     {
-        // public int Id { get; set; }
         public string Name { get; set; }
         public string Text { get; set; }
-
-        // Saving color int format #RRGGBB (like #ffaacc)
-        [MaxLength(7)] public string Color { get; set; }
         // -----
         public virtual User User { get; set; }
+        // Saving color int format #RRGGBB (like #ffaacc)
+        [MaxLength(7)] public string Color { get; set; }
     }
 }
