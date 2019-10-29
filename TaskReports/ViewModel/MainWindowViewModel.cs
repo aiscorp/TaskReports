@@ -25,10 +25,18 @@ namespace TaskReports.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
 
-        public List<Tag> TagsView 
+        public List<Tag> Tags
         {
             get => DataInMemory.Tags;
+        }
 
+        public List<Project> Projects
+        {
+            get => DataInMemory.Projects;
+        }
+        public List<Job> Jobs
+        {
+            get => DataInMemory.Jobs;
         }
 
         private string mainWindowTitle = "Task Reprots v0.01b";
@@ -82,30 +90,50 @@ namespace TaskReports.ViewModel
         public ICommand LogOutCommand { get; private set; }
         public ICommand ChangePasswordCommand { get; private set; }
 
+
+        async void LoadDataInMemoryAsync()
+        {
+            await Task.Run(() =>
+            {
+                var usersDP = new EFUsersDataProvider(new DataContextProvider());
+                var user = usersDP.TryFindUserByName("sunbro");
+                if (user != null)
+                    user = usersDP.GetUserAllById(user.Id);
+
+                DataInMemory.CurrentUser = user;
+                DataInMemory.Tags = user.Tags.ToList();
+                DataInMemory.Projects = user.Projects.ToList();
+                DataInMemory.Jobs = user.Jobs.ToList();
+
+                Thread.Sleep(2000);
+
+                RaisePropertyChanged("Tags");
+
+                Thread.Sleep(2000);
+
+                RaisePropertyChanged("Projects");
+
+                RaisePropertyChanged("Jobs");
+            });
+
+        }
+
+
+
+
+
         public MainWindowViewModel()
         {
             LogInCommand = new RelayCommand(OnRefreshLogInCommandExecute, () => IsLoggedIn != true);
             LogOutCommand = new RelayCommand(OnRefreshLogOutCommandExecute, () => IsLoggedIn == true);
             ChangePasswordCommand = new RelayCommand(OnRefreshChangePasswordCommandExecute, () => IsLoggedIn == true);
 
-          
 
-            //Parallel.Invoke(() =>
-            //{
-            //    Thread.Sleep(5000);
-
-            //});
-
-            //var tasks = new List<Thread>();
-            //tasks.Add(new Thread(() =>
-            //{
-            //    //lock (lockObject)
-            //    //{
-
-            //    //}
-            //}));
+            LoadDataInMemoryAsync();
 
 
+
+            // начальная инициализация БД, раскомментировать при необходимости сброса базы данных
             //using (TaskReportsDb context = new TaskReportsDb())
             //{
 
@@ -160,26 +188,6 @@ namespace TaskReports.ViewModel
             CurrentUser.TryLogIn(UserName, Password);
 
             //Password = "******";
-
-            var tasks = new Thread(() =>         
-            {
-                var usersDP = new EFUsersDataProvider(new DataContextProvider());
-                var user = usersDP.TryFindUserByName("sunbro");
-                if (user != null)
-                    user = usersDP.GetUserAllById(user.Id);
-
-                DataInMemory.Tags = user.Tags.ToList();
-                DataInMemory.Projects = user.Projects.ToList();
-                RaisePropertyChanged("TagsView");
-                RaisePropertyChanged("data:DataInMemory.Projects");
-                RaisePropertyChanged("DataInMemory.Projects");
-                RaisePropertyChanged("Projects");
-
-            });
-
-            tasks.Start();
-
-
             UpdateProperties();
         }
 

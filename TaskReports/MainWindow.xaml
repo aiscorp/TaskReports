@@ -43,7 +43,7 @@
 
                     <DockPanel Grid.Row="0" Grid.Column="0">
                         <Label Content="Категории" MinWidth="100" VerticalAlignment="Center"/>
-                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{Binding Path=TagsView}"  SelectedValue="{Binding TagsView[0]}" MinHeight="20" MaxHeight="40">
+                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{Binding Path=Tags}"  SelectedValue="{Binding Tags[0]}" MinHeight="20" MaxHeight="40">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type entityes:Tag}">
                                     <StackPanel>
@@ -60,7 +60,7 @@
 
                     <DockPanel Grid.Row="1" Grid.Column="0" MinHeight="30">
                         <Label Content="Проект" MinWidth="100" VerticalAlignment="Center"/>
-                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{x:Static data:DataInMemory.Projects}" SelectedIndex="0" MinHeight="20" MaxHeight="40">
+                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{Binding Path=Projects}"  SelectedValue="{Binding Projects[0]}"  MinHeight="20" MaxHeight="40">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type entityes:Tag}">
                                     <StackPanel>
@@ -140,13 +140,13 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="7" AutoGenerateColumns="False" DataContext="{x:Static data:DataInMemory.Projects}">
+                    <DataGrid Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="7" AutoGenerateColumns="False" ItemsSource="{Binding Jobs}">
+                         
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" MinWidth="20"/>
-                            <DataGridTextColumn Header="Категория" MinWidth="100"/>
-                            <DataGridTextColumn Header="Проект" MinWidth="100"/>
-                            <DataGridTextColumn Header="Задача" MinWidth="100" Width="*"/>
-                            <DataGridTextColumn Header="Описание задачи" Width="2*"/>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}" MinWidth="20" Width="*"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" MinWidth="100" Width="3*"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" MinWidth="100" Width="5*"/>
+                            <DataGridTextColumn Header="User" Binding="{Binding User.UserName}" MinWidth="100" Width="2*"/> 
                         </DataGrid.Columns>
 
                     </DataGrid>
