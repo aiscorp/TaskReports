@@ -19,12 +19,18 @@ using TaskReportLib.Data;
 using TaskReportLib.Services.EF;
 using System.Threading;
 using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace TaskReports.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        public DateTime CurrentTime { get; set; }
+        public DateTime StartTime { get; set; } = DateTime.UtcNow;
+        public TimeSpan DeltaTime { get => CurrentTime - StartTime; }
 
+        public User User { get => DataInMemory.CurrentUser; }
+        public Job CurrentJob { get; set; }
         public List<Tag> Tags
         {
             get => DataInMemory.Tags;
@@ -39,7 +45,7 @@ namespace TaskReports.ViewModel
             get => DataInMemory.Jobs;
         }
 
-        private string mainWindowTitle = "Task Reprots v0.01b";
+        private string mainWindowTitle = $"Task Reprots v{Assembly.GetExecutingAssembly().GetName().Version}";
         public string MainWindowTitle
         {
             get => mainWindowTitle;
@@ -59,8 +65,6 @@ namespace TaskReports.ViewModel
         {
             get => CurrentUser.IsLoggedIn ? _password = "******" : _password;
             set => _password = value;
-            // Не ясно зачем используеюся код по примеру ниже, т.к. он не влияет на результат
-            // set => Set(ref _password, CurrentUser.IsLoggedIn ? "******" : value);
         }
 
         public string LoggedInString
@@ -98,28 +102,38 @@ namespace TaskReports.ViewModel
                 var usersDP = new EFUsersDataProvider(new DataContextProvider());
                 var user = usersDP.TryFindUserByName("sunbro");
                 if (user != null)
+                {
                     user = usersDP.GetUserAllById(user.Id);
 
-                DataInMemory.CurrentUser = user;
-                DataInMemory.Tags = user.Tags.ToList();
-                DataInMemory.Projects = user.Projects.ToList();
-                DataInMemory.Jobs = user.Jobs.ToList();
+                    DataInMemory.CurrentUser = user;
+                    DataInMemory.Tags = user.Tags.ToList();
+                    DataInMemory.Projects = user.Projects.ToList();
+                    DataInMemory.Jobs = user.Jobs.ToList();
 
-                Thread.Sleep(2000);
-
-                RaisePropertyChanged("Tags");
-
-                Thread.Sleep(2000);
-
-                RaisePropertyChanged("Projects");
-
-                RaisePropertyChanged("Jobs");
+                    Task.Delay(500);
+                    RaisePropertyChanged("Tags");
+                    RaisePropertyChanged("Projects");
+                    RaisePropertyChanged("Jobs");
+                }
             });
 
         }
 
+        TimerCallback updateFunc;
+        Timer updateTimer;
+        public void UpdateTimer(object obj)
+        {
+            CurrentTime = DateTime.Now;
 
+            RaisePropertyChanged("CurrentTime");
+            RaisePropertyChanged("DeltaTime");
+        }
 
+        public void InitTimer()
+        {
+            updateFunc = new TimerCallback(UpdateTimer);
+            updateTimer = new Timer(updateFunc, null, 0, 1000);
+        }
 
 
         public MainWindowViewModel()
@@ -128,6 +142,11 @@ namespace TaskReports.ViewModel
             LogOutCommand = new RelayCommand(OnRefreshLogOutCommandExecute, () => IsLoggedIn == true);
             ChangePasswordCommand = new RelayCommand(OnRefreshChangePasswordCommandExecute, () => IsLoggedIn == true);
 
+
+
+
+
+            InitTimer();
 
             LoadDataInMemoryAsync();
 

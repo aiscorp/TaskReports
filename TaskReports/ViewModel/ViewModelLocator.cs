@@ -36,16 +36,16 @@ namespace TaskReports.ViewModel
 
 
 
-
+            services
+                            .Register<MainWindowViewModel>();
 
             services
                 .TryRegister(() => new TaskReportsDb());
-             //   .TryRegister(() => new DataInMemory());
+            //   .TryRegister(() => new DataInMemory());
             //.TryRegister(() => new EFUsersDataProvider(new DataContextProvider()));
             //.TryRegister<IRecipientsDataProvider, DataContext>();
 
-            services
-                .Register<MainWindowViewModel>();
+
 
         }
 

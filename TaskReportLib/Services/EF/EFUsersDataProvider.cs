@@ -12,13 +12,12 @@ namespace TaskReportLib.Services.EF
 
         public User GetUserAllById(int id)
         {
-            using (var db = _db.CreateContext())
-                return db.Set<User>()
+            using (var db = _db.CreateContext())  
+            return db.Set<User>()
                     .Include("Jobs")
                     .Include("Tags")
                     .Include("Projects")
                     .FirstOrDefault(r => r.Id == id);
-              
         }
 
         // Поиск юзера по имени, возвращает юзера или null при отсутствии в базе

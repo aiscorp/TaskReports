@@ -95,12 +95,12 @@
                     </DockPanel>
 
                     <DockPanel Grid.Row="1" Grid.Column="2" >
-                        <extToolkit:DateTimePicker Value="{x:Static sys:DateTime.Now}" TextAlignment="Center"  Format="Custom" FormatString="HH:mm, dd.MM.yyyy" AllowSpin="True" MinHeight="30" MaxHeight="40" FontSize="20"/>
+                        <extToolkit:DateTimePicker Value="{Binding CurrentTime}" TextAlignment="Center"  Format="Custom" FormatString="HH:mm:ss, dd.MM.yyyy" AllowSpin="True" MinHeight="30" MaxHeight="40" FontSize="20"/>
                     </DockPanel>
 
                     <DockPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center">
                         <fa:ImageAwesome Height="20" Foreground="Gray" Icon="HourglassHalf" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
-                        <TextBlock Text="00:00m" IsEnabled="False" FontSize="20" VerticalAlignment="Center" Foreground="Gray" Margin="5, 5, 5, 5"/>
+                        <TextBlock Text="{Binding DeltaTime, StringFormat={}{0:hh':'mm':'ss'm'}}" IsEnabled="False" FontSize="20" VerticalAlignment="Center" Foreground="Gray" Margin="5, 5, 5, 5"/>
                     </DockPanel>
 
                     <DockPanel Grid.Row="4" Grid.Column="2" VerticalAlignment="Center">
