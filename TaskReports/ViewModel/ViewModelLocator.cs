@@ -15,6 +15,8 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
+using TaskReportLib.Data;
+using TaskReportLib.Services.EF;
 
 namespace TaskReports.ViewModel
 {
@@ -33,24 +35,19 @@ namespace TaskReports.ViewModel
             ServiceLocator.SetLocatorProvider(() => services);
 
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
 
-            //SimpleIoc.Default.Register<MainViewModel>();
+            services
+                            .Register<MainWindowViewModel>();
 
-            services.Register<MainWindowViewModel>();
+            services
+                .TryRegister(() => new TaskReportsDb());
+            //   .TryRegister(() => new DataInMemory());
+            //.TryRegister(() => new EFUsersDataProvider(new DataContextProvider()));
+            //.TryRegister<IRecipientsDataProvider, DataContext>();
+
+
 
         }
-
-        //public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
         public MainWindowViewModel MainWindow => ServiceLocator.Current.GetInstance<MainWindowViewModel>();
 

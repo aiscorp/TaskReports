@@ -15,13 +15,37 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight;
 using System.Windows;
 using System.Windows.Threading;
+using TaskReportLib.Data;
+using TaskReportLib.Services.EF;
+using System.Threading;
+using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace TaskReports.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        public DateTime CurrentTime { get; set; }
+        public DateTime StartTime { get; set; } = DateTime.UtcNow;
+        public TimeSpan DeltaTime { get => CurrentTime - StartTime; }
 
-        private string mainWindowTitle = "Task Reprots v0.01b";
+        public User User { get => DataInMemory.CurrentUser; }
+        public Job CurrentJob { get; set; }
+        public List<Tag> Tags
+        {
+            get => DataInMemory.Tags;
+        }
+
+        public List<Project> Projects
+        {
+            get => DataInMemory.Projects;
+        }
+        public List<Job> Jobs
+        {
+            get => DataInMemory.Jobs;
+        }
+
+        private string mainWindowTitle = $"Task Reprots v{Assembly.GetExecutingAssembly().GetName().Version}";
         public string MainWindowTitle
         {
             get => mainWindowTitle;
@@ -39,10 +63,8 @@ namespace TaskReports.ViewModel
         private string _password = "******";
         public string Password
         {
-            get => CurrentUser.IsLoggedIn ? _password="******" : _password;
+            get => CurrentUser.IsLoggedIn ? _password = "******" : _password;
             set => _password = value;
-           // Не ясно зачем используеюся код по примеру ниже, т.к. он не влияет на результат
-           // set => Set(ref _password, CurrentUser.IsLoggedIn ? "******" : value);
         }
 
         public string LoggedInString
@@ -54,7 +76,7 @@ namespace TaskReports.ViewModel
         {
             get => IsLoggedIn ? "Green" : "Gray";
         }
-        
+
         public bool IsLoggedIn
         {
             get => CurrentUser.IsLoggedIn;
@@ -66,17 +88,118 @@ namespace TaskReports.ViewModel
         }
 
         public int TestValue = 10;
-        
+
 
         public ICommand LogInCommand { get; private set; }
         public ICommand LogOutCommand { get; private set; }
         public ICommand ChangePasswordCommand { get; private set; }
+
+
+        async void LoadDataInMemoryAsync()
+        {
+            await Task.Run(() =>
+            {
+                var usersDP = new EFUsersDataProvider(new DataContextProvider());
+                var user = usersDP.TryFindUserByName("sunbro");
+                if (user != null)
+                {
+                    user = usersDP.GetUserAllById(user.Id);
+
+                    DataInMemory.CurrentUser = user;
+                    DataInMemory.Tags = user.Tags.ToList();
+                    DataInMemory.Projects = user.Projects.ToList();
+                    DataInMemory.Jobs = user.Jobs.ToList();
+
+                    Task.Delay(500);
+                    RaisePropertyChanged("Tags");
+                    RaisePropertyChanged("Projects");
+                    RaisePropertyChanged("Jobs");
+                }
+            });
+
+        }
+
+        TimerCallback updateFunc;
+        Timer updateTimer;
+        public void UpdateTimer(object obj)
+        {
+            CurrentTime = DateTime.Now;
+
+            RaisePropertyChanged("CurrentTime");
+            RaisePropertyChanged("DeltaTime");
+        }
+
+        public void InitTimer()
+        {
+            updateFunc = new TimerCallback(UpdateTimer);
+            updateTimer = new Timer(updateFunc, null, 0, 1000);
+        }
+
 
         public MainWindowViewModel()
         {
             LogInCommand = new RelayCommand(OnRefreshLogInCommandExecute, () => IsLoggedIn != true);
             LogOutCommand = new RelayCommand(OnRefreshLogOutCommandExecute, () => IsLoggedIn == true);
             ChangePasswordCommand = new RelayCommand(OnRefreshChangePasswordCommandExecute, () => IsLoggedIn == true);
+
+
+
+
+
+            InitTimer();
+
+            LoadDataInMemoryAsync();
+
+
+
+            // начальная инициализация БД, раскомментировать при необходимости сброса базы данных
+            //using (TaskReportsDb context = new TaskReportsDb())
+            //{
+
+            //    List<User> users = new List<User>
+            //    {
+            //        new User{UserName = "root", PasswordHash = "aabb2100033f0352fe7458e412495148", LastLogin = DateTime.Parse("2019-10-22 15:49:22.000")},
+            //        new User{UserName = "aisc", PasswordHash = "ff4d41e1e980dd9e2697e74084d10a97", LastLogin = DateTime.Parse("2019-10-22 15:49:22.000")},
+            //        new User{UserName = "sunbro"}
+            //    };
+
+            //    List<Project> projects = new List<Project>
+            //    {
+            //        new Project{Name = "Без проекта", Text="Если проект не требуется", Color="#aaaaaa", User = users[1]},
+            //        new Project{Name = "Проект 2", Text="Описание проекта 2", Color="#0000ff", User = users[2]},
+            //        new Project{Name = "Проект 3", Text="Описание проекта 3", Color="#00ff00", User = users[1]},
+            //        new Project{Name = "Проект 4", Text="Описание проекта 4", Color="#ff0000", User = users[2]},
+            //        new Project{Name = "Проект 5", Text="Описание проекта 5", Color="#0000ff", User = users[1]},
+            //        new Project{Name = "Проект 6", Text="Описание проекта 6", Color="#ff0000", User = users[2]}
+            //    };
+
+            //    List<Tag> tags = new List<Tag>
+            //    {
+            //        new Tag{Name = "Работа №1", Text="Основные задачи в рабочее время", Color="#ff0000", User = users[1]},
+            //        new Tag{Name = "Работа №2", Text="Основные задачи в рабочее время", Color="#00ff00", User = users[2]},
+            //        new Tag{Name = "Обучение", Text="Обучение программированию и не только", Color="#0000ff", User = users[1]},
+            //        new Tag{Name = "Обучение", Text="Обучение программированию и не только", Color="#0000ff", User = users[2]},
+            //        new Tag{Name = "Отдых", Text="Перерывы на отдых, развлечения или что-то другое", Color="#aaaaaa", User = users[1]}
+            //    };
+
+            //    List<Job> jobs = new List<Job>
+            //    {
+            //        new Job { Name = "Задача 1", Description = "Описание задачи", User = users[1] },
+            //        new Job { Name = "Задача 2", Description = "Описание задачи", User = users[1] },
+            //        new Job { Name = "Задача 1", Description = "Описание задачи", User = users[2] },
+            //        new Job { Name = "Задача 2", Description = "Описание задачи", User = users[2] },
+            //        new Job { Name = "Задача 3", Description = "Описание задачи", User = users[1] }
+            //    };
+
+
+            //    context.Users.AddRange(users);
+            //    context.Projects.AddRange(projects);
+            //    context.Tags.AddRange(tags);
+            //    context.Jobs.AddRange(jobs);
+            //    context.SaveChanges();
+            //}
+
+
         }
 
         private void OnRefreshLogInCommandExecute()
@@ -84,7 +207,6 @@ namespace TaskReports.ViewModel
             CurrentUser.TryLogIn(UserName, Password);
 
             //Password = "******";
-
             UpdateProperties();
         }
 
@@ -120,7 +242,7 @@ namespace TaskReports.ViewModel
             RaisePropertyChanged("IsLoggedOut");
             RaisePropertyChanged("LoggedInColor");
             RaisePropertyChanged("LoggedInString");
-            RaisePropertyChanged("Password"); 
+            RaisePropertyChanged("Password");
         }
 
     }

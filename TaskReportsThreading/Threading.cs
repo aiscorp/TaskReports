@@ -12,22 +12,28 @@ namespace TaskReportsThreading
 
         static object lockObject = new object();
         static double result;
-        static void Lesson5_Task1()
+        public static void Lesson5()
         {
-            Console.WriteLine("Задание №1 к уроку №5, Многопоточное программирование\n Выход по нажатию Q.");
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Урок №5, Многопоточное программирование\n Выход по нажатию Q.\n");
+            Console.WriteLine("Задание: Написать приложение, считающее в раздельных потоках:\na.факториал числа N, которое вводится с клавиатуру;\nb.сумму целых чисел до N, которое также вводится с клавиатуры.\n");
+            Console.ResetColor();
 
             while (true)
             {
                 if (Console.KeyAvailable == false)
                     Thread.Sleep(200);
 
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write($"Введите положительное число:");
                 string input = Console.ReadLine();
+                Console.ResetColor();
                 if (input == "Q" || input == "q" || input == "й" || input == "Й")
                     break;
 
-                int inputNumber = 0;
-                //Console.WriteLine($"Рекурсивный факториал: {Factorial(inputNumber)}");
+                int inputNumber = 0;                
+
                 if (int.TryParse(input, out inputNumber))
                 {
                     Console.WriteLine("\nВычисление факториала в отдельном потоке:");

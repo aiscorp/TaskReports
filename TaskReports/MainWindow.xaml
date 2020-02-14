@@ -19,6 +19,7 @@
         DataContext="{Binding MainWindow, Source={StaticResource Locator}}">
     <Window.Resources>
         <conv:BoolToColorConverter x:Key="ColorConverter"/>
+        <conv:RgbToColorConverter x:Key="RGBConverter"/>        
     </Window.Resources>
     <Grid>
 
@@ -42,12 +43,12 @@
 
                     <DockPanel Grid.Row="0" Grid.Column="0">
                         <Label Content="Категории" MinWidth="100" VerticalAlignment="Center"/>
-                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{x:Static data:TestData.Tags}" SelectedIndex="0" MinHeight="20" MaxHeight="40">
+                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{Binding Path=Tags}"  SelectedValue="{Binding Tags[0]}" MinHeight="20" MaxHeight="40">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type entityes:Tag}">
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color}"/>
+                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color, Converter={conv:RgbToColorConverter}}"/>
                                             <TextBlock Text="{Binding Name}" />
                                         </StackPanel>
                                         <TextBlock Text="{Binding Text}" FontStyle="Italic" Foreground="Gray" DockPanel.Dock="Bottom"  TextWrapping="WrapWithOverflow" />
@@ -59,12 +60,12 @@
 
                     <DockPanel Grid.Row="1" Grid.Column="0" MinHeight="30">
                         <Label Content="Проект" MinWidth="100" VerticalAlignment="Center"/>
-                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{x:Static data:TestData.Projects}" SelectedIndex="0" MinHeight="20" MaxHeight="40">
+                        <ComboBox Margin="5, 5, 5, 5" HorizontalAlignment="Stretch" ItemsSource="{Binding Path=Projects}"  SelectedValue="{Binding Projects[0]}"  MinHeight="20" MaxHeight="40">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type entityes:Tag}">
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color}" />
+                                            <fa:ImageAwesome Height="10" Icon="Tag"  Margin="2,2,5,2" Foreground="{Binding Color, Converter={conv:RgbToColorConverter}}" />
                                             <TextBlock Text="{Binding Name}" />
                                         </StackPanel>
                                         <TextBlock Text="{Binding Text}" FontStyle="Italic" Foreground="Gray" DockPanel.Dock="Bottom"  TextWrapping="WrapWithOverflow" />
@@ -94,12 +95,12 @@
                     </DockPanel>
 
                     <DockPanel Grid.Row="1" Grid.Column="2" >
-                        <extToolkit:DateTimePicker Value="{x:Static sys:DateTime.Now}" TextAlignment="Center"  Format="Custom" FormatString="HH:mm, dd.MM.yyyy" AllowSpin="True" MinHeight="30" MaxHeight="40" FontSize="20"/>
+                        <extToolkit:DateTimePicker Value="{Binding CurrentTime}" TextAlignment="Center"  Format="Custom" FormatString="HH:mm:ss, dd.MM.yyyy" AllowSpin="True" MinHeight="30" MaxHeight="40" FontSize="20"/>
                     </DockPanel>
 
                     <DockPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center">
                         <fa:ImageAwesome Height="20" Foreground="Gray" Icon="HourglassHalf" DockPanel.Dock="Left" Margin="5, 5, 5, 5" />
-                        <TextBlock Text="00:00m" IsEnabled="False" FontSize="20" VerticalAlignment="Center" Foreground="Gray" Margin="5, 5, 5, 5"/>
+                        <TextBlock Text="{Binding DeltaTime, StringFormat={}{0:hh':'mm':'ss'm'}}" IsEnabled="False" FontSize="20" VerticalAlignment="Center" Foreground="Gray" Margin="5, 5, 5, 5"/>
                     </DockPanel>
 
                     <DockPanel Grid.Row="4" Grid.Column="2" VerticalAlignment="Center">
@@ -139,13 +140,13 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="7" AutoGenerateColumns="False" DataContext="{x:Static data:TestData.Tasks}">
+                    <DataGrid Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="7" AutoGenerateColumns="False" ItemsSource="{Binding Jobs}">
+                         
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" MinWidth="20"/>
-                            <DataGridTextColumn Header="Категория" MinWidth="100"/>
-                            <DataGridTextColumn Header="Проект" MinWidth="100"/>
-                            <DataGridTextColumn Header="Задача" MinWidth="100" Width="*"/>
-                            <DataGridTextColumn Header="Описание задачи" Width="2*"/>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}" MinWidth="20" Width="*"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" MinWidth="100" Width="3*"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" MinWidth="100" Width="5*"/>
+                            <DataGridTextColumn Header="User" Binding="{Binding User.UserName}" MinWidth="100" Width="2*"/> 
                         </DataGrid.Columns>
 
                     </DataGrid>
